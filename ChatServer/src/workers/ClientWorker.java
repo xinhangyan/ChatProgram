@@ -16,7 +16,7 @@ public class ClientWorker extends Thread {
 
     private final CustomLogger logger = CustomLogger.getSingleton();
 
-    private boolean isClientOnline = true;
+    private volatile boolean isClientOnline = true;
     private User user;
 
     public ClientWorker(Socket socket, int workerId) throws IOException {
