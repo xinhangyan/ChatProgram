@@ -43,17 +43,4 @@ public class ChatServer {
 
         logger.info("Listening on " + bindAddress + ":" + port);
     }
-
-
-
-
-    public void listen() {
-        try {
-            Socket clientSocket = serverSocket.accept();
-        } catch (Exception e) {
-
-        }
-    }
-
-
 }

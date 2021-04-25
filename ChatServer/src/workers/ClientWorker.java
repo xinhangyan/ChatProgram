@@ -7,6 +7,7 @@ import utils.CustomLogger;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Objects;
 
 public class ClientWorker extends Thread {
     private final Socket socket;
@@ -40,6 +41,10 @@ public class ClientWorker extends Thread {
         while (isClientOnline) {
             try {
                 String line = bufferedReader.readLine();
+                if(Objects.isNull(line)){
+                    logger.info("读取输入流为空 ");
+                    continue;
+                }
                 commandHandler.onCommand(line);
             } catch (IOException e) {
                 e.printStackTrace();

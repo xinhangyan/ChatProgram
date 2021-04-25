@@ -1,13 +1,18 @@
+package works;
+
+import view.LoginFrame;
+
 import java.io.*;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class ChatClient extends Thread{
+    public static BufferedWriter writer;
+    public static BufferedReader reader;
     private void handle(InputStream input, OutputStream output) throws IOException {
-        var writer = new BufferedWriter(new OutputStreamWriter(output, StandardCharsets.UTF_8));
-        var reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8));
+        writer = new BufferedWriter(new OutputStreamWriter(output, StandardCharsets.UTF_8));
+        reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8));
         Scanner scanner = new Scanner(System.in);
         System.out.println("[server] " + reader.readLine());
         for (;;) {
@@ -16,12 +21,13 @@ public class ChatClient extends Thread{
             writer.write(s);
             writer.newLine();
             writer.flush();
-            String resp = reader.readLine();
-            System.out.println("<<< " + resp);
-            if (resp.equals("bye")) {
-                break;
-            }
+            System.out.println("<<< " + reader.readLine());
         }
+//        writer.write("login 123 123");
+//        writer.newLine();
+//        writer.flush();
+//        System.out.println(reader.readLine());
+//        new LoginFrame();
     }
 
     @Override
