@@ -1,13 +1,12 @@
 package commands;
 
 import interfaces.Command;
+import models.TransDto;
 import workers.ClientWorker;
 
 import java.io.IOException;
 
 public class Exit implements Command {
-    private final String callBackName = "ExitListener|";
-
     @Override
     public String[] getArgumentsDescription() {
         return new String[0];
@@ -19,8 +18,8 @@ public class Exit implements Command {
     }
 
     @Override
-    public void execute(String argument, ClientWorker clientWorker) throws IOException {
-        clientWorker.writeLine("Bye!");
+    public void execute(TransDto dto, ClientWorker clientWorker) throws IOException {
+        clientWorker.write(new TransDto(true,"exit",dto.getSource(),"You are not logged in!"));
         clientWorker.setClientOnline(false);
     }
 }

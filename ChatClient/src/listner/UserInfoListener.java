@@ -1,5 +1,6 @@
 package listner;
 
+import models.TransDto;
 import models.User;
 import works.ChatClient;
 
@@ -15,31 +16,17 @@ public class UserInfoListener extends BaseListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        send("info");
+        TransDto transDto = new TransDto();
+        transDto.setSource("UserInfoListener");
+        transDto.setTarget("info");
+        send(transDto);
     }
 
     @Override
-    public void callBack(String msg) {
-        if("User does not exist.".equals(msg)){
-            System.out.println("User does not exist.");
+    public void callBack(TransDto dto) {
+        if(!dto.isSuccess()){
             return;
         }
-        String[] data = msg.trim().split(",");
-        int id = Integer.parseInt(data[0]);
-        TreeSet<Integer> friendList = Arrays.stream(data[5].split("\\|"))
-                .filter(e -> !"".equals(e))
-                .mapToInt(Integer::parseInt)
-                .boxed()
-                .collect(Collectors.toCollection(
-                        TreeSet::new
-                ));
-        TreeSet<Integer> requestList = Arrays.stream(data[6].split("\\|"))
-                .filter(e -> !"".equals(e))
-                .mapToInt(Integer::parseInt)
-                .boxed()
-                .collect(Collectors.toCollection(
-                        TreeSet::new
-                ));
-        ChatClient.user = new User(id, data[1], data[2], data[3], data[4], friendList, requestList);
+        ChatClient.user = dto.getUser();
     }
 }

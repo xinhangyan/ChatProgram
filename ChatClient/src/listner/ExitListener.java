@@ -1,5 +1,6 @@
 package listner;
 
+import models.TransDto;
 import view.AllFrame;
 import view.ProfileFrame;
 import works.ChatClient;
@@ -12,9 +13,9 @@ public class ExitListener extends BaseListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            send("exit");
-            ChatClient.writer.close();
-            ChatClient.reader.close();
+            send(new TransDto("ExitListener","exit"));
+            ChatClient.oos.close();
+            ChatClient.ois.close();
             ChatClient.sock.close();
         } catch (IOException ioException) {
             ioException.printStackTrace();
@@ -24,7 +25,7 @@ public class ExitListener extends BaseListener{
     }
 
     @Override
-    public void callBack(String msg) {
+    public void callBack(TransDto dto) {
         //提示
 
     }

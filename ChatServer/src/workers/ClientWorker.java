@@ -1,6 +1,7 @@
 package workers;
 
 import database.UserDatabase;
+import models.TransDto;
 import models.User;
 import utils.CommandHandler;
 import utils.CustomLogger;
@@ -11,8 +12,9 @@ import java.util.Objects;
 
 public class ClientWorker extends Thread {
     private final Socket socket;
-    private final BufferedReader bufferedReader;
-    private final BufferedWriter bufferedWriter;
+    private final ObjectInputStream ois;
+    private final ObjectOutputStream oos;
+
     private final CommandHandler commandHandler = new CommandHandler(this);
 
     private final CustomLogger logger = CustomLogger.getSingleton();
@@ -23,8 +25,8 @@ public class ClientWorker extends Thread {
     public ClientWorker(Socket socket, int workerId) throws IOException {
         this.setName("Client Worker #" + workerId);
         this.socket = socket;
-        this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+        ois = new ObjectInputStream(socket.getInputStream());
+        oos = new ObjectOutputStream(socket.getOutputStream());
     }
 
     @Override
@@ -33,23 +35,25 @@ public class ClientWorker extends Thread {
         userDatabase.addSession(this);
         logger.info(socket.getRemoteSocketAddress() + " connected.");
         try {
-            bufferedWriter.write("Welcome to the Chat Server!" + System.lineSeparator());
-            bufferedWriter.flush();
+            oos.writeObject("Welcome to the Chat Server!" + System.lineSeparator());
+            oos.flush();
         } catch (Exception e) {
             isClientOnline = false;
         }
         while (isClientOnline) {
             try {
-                String line = bufferedReader.readLine();
-                if(Objects.isNull(line)){
+                TransDto transDto = (TransDto) ois.readObject();
+                if(Objects.isNull(transDto)){
                     logger.info("读取输入流为空 ");
                     continue;
                 }
-                commandHandler.onCommand(line);
+                commandHandler.onCommand(transDto);
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (NullPointerException e) {
                 isClientOnline = false;
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
         }
 
@@ -75,9 +79,9 @@ public class ClientWorker extends Thread {
         return socket;
     }
 
-    public void writeLine(String line) throws IOException {
-        bufferedWriter.write(line + System.lineSeparator());
-        bufferedWriter.flush();
+    public void write(TransDto dto) throws IOException {
+        oos.writeObject(dto);
+        oos.flush();
     }
 
     public User getUser() {

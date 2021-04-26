@@ -22,6 +22,8 @@ public class Commands {
         commandHashMap.put("addfriend", new FriendByUsername());
         commandHashMap.put("help", helpCommand);
         commandHashMap.put("exit", new Exit());
+        commandHashMap.put("friendlist", new FriendsList());
+        commandHashMap.put("userlist",new UserList());
 
         helpCommand.setCommandList(commandHashMap);
     }

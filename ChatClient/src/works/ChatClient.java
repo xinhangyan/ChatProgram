@@ -1,6 +1,7 @@
 package works;
 
 import listner.BaseListener;
+import models.TransDto;
 import models.User;
 import view.AllFrame;
 import view.LoginFrame;
@@ -13,26 +14,25 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class ChatClient extends Thread{
-    public static BufferedWriter writer;
-    public static BufferedReader reader;
+    public static ObjectInputStream ois;
+    public static ObjectOutputStream oos;
     public static Socket sock;
     public static User user;
     public static HashMap<String, BaseListener> listenerMap = new HashMap<>();
 
 
-    private void handle(InputStream input, OutputStream output) throws IOException {
-        writer = new BufferedWriter(new OutputStreamWriter(output, StandardCharsets.UTF_8));
-        reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8));
-        System.out.println("[server] " + reader.readLine());
+    private void handle(InputStream input, OutputStream output) throws IOException, ClassNotFoundException {
+        oos = new ObjectOutputStream(output);
+        ois = new ObjectInputStream(input);
+        System.out.println("[server] " +  ois.readObject());
         AllFrame.loginFrame = new LoginFrame();
         for (;;) {
-            String line = reader.readLine();
-            String[] args = line.split("\\|");
-            BaseListener baseListener = listenerMap.get(args[0]);
+            TransDto transDto = (TransDto) ois.readObject();
+            BaseListener baseListener = listenerMap.get(transDto.getTarget());
             if(Objects.nonNull(baseListener)){
-                baseListener.callBack(args[1]);
+                baseListener.callBack(transDto);
             }
-            System.out.println("callback:"+line);
+            System.out.println("callback:"+transDto.toString());
         }
 
     }
@@ -46,7 +46,7 @@ public class ChatClient extends Thread{
                     handle(input, output);
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

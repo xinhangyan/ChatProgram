@@ -1,5 +1,6 @@
 package listner;
 
+import models.TransDto;
 import works.ChatClient;
 
 import java.awt.*;
@@ -17,11 +18,10 @@ public class BaseListener implements ActionListener {
     }
 
     //send message to server
-    public void send(String msg){
+    public void send(TransDto dto){
         try {
-            ChatClient.writer.write(msg);
-            ChatClient.writer.newLine();
-            ChatClient.writer.flush();
+            ChatClient.oos.writeObject(dto);
+            ChatClient.oos.flush();
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
@@ -33,7 +33,7 @@ public class BaseListener implements ActionListener {
 
     }
 
-    public void callBack(String msg){
+    public void callBack(TransDto msg){
 
     }
 }

@@ -1,5 +1,6 @@
 package listner;
 
+import models.TransDto;
 import models.User;
 import view.AllFrame;
 import view.ProfileFrame;
@@ -23,24 +24,28 @@ public class LoginListener extends BaseListener  {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String login = "login "+name.getText()+" "+password.getText();
-        send(login);
+        TransDto transDto = new TransDto();
+        transDto.setUsername(name.getText());
+        transDto.setPassword(password.getText());
+        transDto.setSource("LoginListener");
+        transDto.setTarget("login");
+        send(transDto);
     }
 
     @Override
-    public void callBack(String msg) {
+    public void callBack(TransDto dto) {
         //提示
-        errorLabel.setText(msg);
+        errorLabel.setText(dto.getMsg());
         errorLabel.setAlignment(Label.CENTER);
 
-        if(msg.contains("are now logged in!")){
+        if(dto.isSuccess()){
             //登录成功，隐藏登录面板，打开主面板
             System.out.println("登录成功");
             AllFrame.profileFrame = new ProfileFrame();
             AllFrame.loginFrame.setVisible(false);
-            ChatClient.user = Optional.ofNullable(ChatClient.user).orElse(new User());
-            ChatClient.user.setId(Integer.parseInt(msg.trim().split(" ")[0]));
+            System.out.println("此处执行");
+            ChatClient.user = dto.getUser();
         }
-        System.out.println(msg+"\n"+msg);
+        System.out.println(dto.toString());
     }
 }

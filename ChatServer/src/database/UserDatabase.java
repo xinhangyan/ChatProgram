@@ -5,10 +5,7 @@ import utils.CustomLogger;
 import workers.ClientWorker;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class UserDatabase {
@@ -110,6 +107,28 @@ public class UserDatabase {
             onlineUsers.add(user != null ? user.getUsername() : "Anonymous User from " + e.getRemoteAddress());
         });
         return onlineUsers;
+    }
+
+    public User[] getOnlineUserArray() {
+        int size = activeSessions.size();
+        User[] users = new User[size];
+        for (int i = 0; i < size; i++) {
+            users[i] = activeSessions.get(i).getUser();
+        }
+        return users;
+    }
+
+    public User[] getFriends(User user) {
+        TreeSet<Integer> friends = user.getFriends();
+        return friends.stream().map(x -> {
+            return userList.stream().filter(y -> y.getId() == x).findAny().orElse(null);
+        }).filter(Objects::nonNull).toArray(User[]::new);
+    }
+
+    public User[] getUsers(Integer[] usernames) {
+        return Arrays.stream(usernames).map(x -> {
+            return userList.stream().filter(y -> y.getId()==x).findAny().orElse(null);
+        }).filter(Objects::nonNull).toArray(User[]::new);
     }
 
     public synchronized void loadProfiles() throws IOException {

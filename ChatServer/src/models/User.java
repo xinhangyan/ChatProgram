@@ -15,6 +15,7 @@ public class User implements Comparable<User>, Serializable {
     private TreeSet<Integer> friends;
     private TreeSet<Integer> pendingFriendRequests;
     private boolean isPrivate;
+    private static final long serialVersionUID = 2L;
 
     public User(User user) {
         this.id = user.id;

@@ -2,6 +2,7 @@ package commands;
 
 import database.UserDatabase;
 import interfaces.Command;
+import models.TransDto;
 import models.User;
 import workers.ClientWorker;
 
@@ -20,13 +21,13 @@ public class Info implements Command {
     }
 
     @Override
-    public void execute(String argument, ClientWorker clientWorker) throws IOException {
+    public void execute(TransDto dto, ClientWorker clientWorker) throws IOException {
         UserDatabase userDatabase = UserDatabase.getSingleton();
         User user;
-        if (!"".equals(argument)) {
-            user = userDatabase.getUser(argument);
+        if (!"".equals(dto.getUsername())) {
+            user = userDatabase.getUser(dto.getUsername());
             if (user == null) {
-                clientWorker.writeLine(callBackName+"User does not exist.");
+                clientWorker.write(new TransDto(false,"info",dto.getSource(),"User does not exist."));
                 return;
             }
         } else {
@@ -34,7 +35,9 @@ public class Info implements Command {
         }
 
         if (user != null) {
-            clientWorker.writeLine(callBackName+user.getSaveString());
+            TransDto info = new TransDto(true, "info", dto.getSource(), "");
+            info.setUser(user);
+            clientWorker.write(info);
         }
     }
 }

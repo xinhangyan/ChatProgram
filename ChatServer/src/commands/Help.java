@@ -1,6 +1,7 @@
 package commands;
 
 import interfaces.Command;
+import models.TransDto;
 import workers.ClientWorker;
 
 import java.io.IOException;
@@ -21,11 +22,11 @@ public class Help implements Command {
     }
 
     @Override
-    public void execute(String argument, ClientWorker clientWorker) throws IOException {
-        clientWorker.writeLine("Registered commands:");
-        for (Map.Entry<String, Command> entry : commandHashMap.entrySet()) {
-            clientWorker.writeLine(entry.getKey() + " - " + entry.getValue().getDescription());
-        }
+    public void execute(TransDto dto, ClientWorker clientWorker) throws IOException {
+//        clientWorker.writeLine("Registered commands:");
+//        for (Map.Entry<String, Command> entry : commandHashMap.entrySet()) {
+//            clientWorker.writeLine(entry.getKey() + " - " + entry.getValue().getDescription());
+//        }
     }
 
     public void setCommandList(HashMap<String, Command> commandHashMap) {

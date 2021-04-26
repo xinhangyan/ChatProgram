@@ -1,13 +1,12 @@
 package listner;
 
-import models.User;
+import models.TransDto;
 import view.AllFrame;
 import view.ProfileFrame;
 import works.ChatClient;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.Optional;
 
 public class RegisterListener extends BaseListener{
     TextField name;
@@ -23,25 +22,27 @@ public class RegisterListener extends BaseListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String register = "register "+name.getText()+" "+password.getText();
-        send(register);
-
+        TransDto transDto = new TransDto();
+        transDto.setUsername(name.getText());
+        transDto.setPassword(password.getText());
+        transDto.setSource("RegisterListener");
+        transDto.setTarget("register");
+        send(transDto);
     }
 
     @Override
-    public void callBack(String msg) {
+    public void callBack(TransDto dto) {
         //提示
-        errorLabel.setText(msg);
+        errorLabel.setText(dto.getMsg());
         errorLabel.setAlignment(Label.CENTER);
 
-        if(msg.contains(" added.")){
+        if(dto.isSuccess()){
             //注册成功，隐藏登录面板，打开主面板，返回用户id赋值给user对象
             System.out.println("注册成功");
             AllFrame.profileFrame = new ProfileFrame();
             AllFrame.loginFrame.setVisible(false);
-            ChatClient.user = Optional.ofNullable(ChatClient.user).orElse(new User());
-            ChatClient.user.setId(Integer.parseInt(msg.trim().split(" ")[0]));
+            ChatClient.user = dto.getUser();
         }
-        System.out.println(msg+"\n"+msg);
+        System.out.println(dto.toString());
     }
 }

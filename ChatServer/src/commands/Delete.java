@@ -2,14 +2,13 @@ package commands;
 
 import database.UserDatabase;
 import interfaces.Command;
+import models.TransDto;
 import models.User;
 import workers.ClientWorker;
 
 import java.io.IOException;
 
 public class Delete implements Command {
-    private final String callBackName = "LoginListener|";
-
     @Override
     public String[] getArgumentsDescription() {
         return new String[] { "<Confirm Username>" };
@@ -21,14 +20,14 @@ public class Delete implements Command {
     }
 
     @Override
-    public void execute(String argument, ClientWorker clientWorker) throws IOException {
+    public void execute(TransDto dto, ClientWorker clientWorker) throws IOException {
         User user = clientWorker.getUser();
         if (user == null) {
-            clientWorker.writeLine("You are not logged in!");
+            clientWorker.write(new TransDto(false,"delete",dto.getSource(),"You are not logged in!"));
             return;
         }
-        if (!user.getUsername().equals(argument)) {
-            clientWorker.writeLine("You must confirm your username first to delete your account!");
+        if (!user.getUsername().equals(dto.getUsername())) {
+            clientWorker.write(new TransDto(false,"delete",dto.getSource(),"You must confirm your username first to delete your account!"));
             return;
         }
 
@@ -36,7 +35,7 @@ public class Delete implements Command {
 
         userDatabase.deleteUser(user);
 
-        clientWorker.writeLine("Your account has been deleted.");
+        clientWorker.write(new TransDto(true,"delete",dto.getSource(),"Your account has been deleted."));
         clientWorker.setClientOnline(false);
     }
 }

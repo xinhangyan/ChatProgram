@@ -1,8 +1,9 @@
 package models;
 
+import java.io.Serializable;
 import java.util.TreeSet;
 
-public class User implements Comparable<User> {
+public class User implements Comparable<User>, Serializable {
     private Integer id;
     private String username;
     private String realName;
@@ -12,6 +13,7 @@ public class User implements Comparable<User> {
     private TreeSet<Integer> friends;
     private TreeSet<Integer> pendingFriendRequests;
     private boolean isPrivate;
+    private static final long serialVersionUID = 2L;
 
     public User() {
     }
