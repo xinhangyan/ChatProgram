@@ -1,10 +1,11 @@
 package models;
 
+import java.io.Serializable;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class User implements Comparable<User> {
+public class User implements Comparable<User>, Serializable {
     private Integer id;
     private String username;
     private String realName;

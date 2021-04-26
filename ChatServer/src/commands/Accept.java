@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.TreeSet;
 
 public class Accept implements Command {
+    private final String callBackName = "LoginListener|";
+
     @Override
     public String[] getArgumentsDescription() {
         return new String[]{ "<Username>" };

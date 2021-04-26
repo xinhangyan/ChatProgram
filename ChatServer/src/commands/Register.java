@@ -18,20 +18,22 @@ public class Register implements Command {
         return "Register a new account.";
     }
 
+    private final String callBackName = "RegisterListener|";
+
     @Override
     public void execute(String argument, ClientWorker clientWorker) throws IOException {
         if (clientWorker.getUser() != null) {
-            clientWorker.writeLine("You are already logged in!");
+            clientWorker.writeLine(callBackName+"You are already logged in!");
             return;
         }
         String[] arguments = argument.split(" ");
         if (arguments.length != 2) {
-            clientWorker.writeLine("Invalid arguments.");
+            clientWorker.writeLine(callBackName+"Invalid arguments.");
             return;
         }
 
         if (argument.contains(",")) {
-            clientWorker.writeLine("Arguments contain invalid characters.");
+            clientWorker.writeLine(callBackName+"Arguments contain invalid characters.");
             return;
         }
 
@@ -42,10 +44,10 @@ public class Register implements Command {
 
         if (!userDatabase.isUserWithUsernamePresent(username)) {
             User user = userDatabase.addUser(username, password);
-            clientWorker.writeLine("User added.");
+            clientWorker.writeLine(callBackName+user.getUsername()+" added.");
             clientWorker.setUser(user);
         } else {
-            clientWorker.writeLine("Unable to add user.");
+            clientWorker.writeLine(callBackName+"Unable to add user.");
         }
     }
 }

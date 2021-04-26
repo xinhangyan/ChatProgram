@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class List implements Command {
+    private final String callBackName = "LoginListener|";
+
     @Override
     public String[] getArgumentsDescription() {
         return new String[0];

@@ -13,6 +13,9 @@ public class User implements Comparable<User> {
     private TreeSet<Integer> pendingFriendRequests;
     private boolean isPrivate;
 
+    public User() {
+    }
+
     public User(User user) {
         this.id = user.id;
         this.username = user.username;

@@ -9,12 +9,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.Optional;
 
-public class LoginListener extends BaseListener  {
+public class RegisterListener extends BaseListener{
     TextField name;
     TextField password;
     Label errorLabel;
 
-    public LoginListener(TextField name, TextField password,Label errorLabel) {
+    public RegisterListener(TextField name, TextField password, Label errorLabel) {
         super();
         this.name = name;
         this.password = password;
@@ -23,8 +23,9 @@ public class LoginListener extends BaseListener  {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String login = "login "+name.getText()+" "+password.getText();
-        send(login);
+        String register = "register "+name.getText()+" "+password.getText();
+        send(register);
+
     }
 
     @Override
@@ -33,9 +34,9 @@ public class LoginListener extends BaseListener  {
         errorLabel.setText(msg);
         errorLabel.setAlignment(Label.CENTER);
 
-        if(msg.contains("are now logged in!")){
-            //登录成功，隐藏登录面板，打开主面板
-            System.out.println("登录成功");
+        if(msg.contains(" added.")){
+            //注册成功，隐藏登录面板，打开主面板，返回用户id赋值给user对象
+            System.out.println("注册成功");
             AllFrame.profileFrame = new ProfileFrame();
             AllFrame.loginFrame.setVisible(false);
             ChatClient.user = Optional.ofNullable(ChatClient.user).orElse(new User());

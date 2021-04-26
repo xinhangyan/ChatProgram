@@ -1,4 +1,3 @@
-import view.LoginFrame;
 import works.ChatClient;
 
 public class main {

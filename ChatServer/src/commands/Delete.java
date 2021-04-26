@@ -8,6 +8,8 @@ import workers.ClientWorker;
 import java.io.IOException;
 
 public class Delete implements Command {
+    private final String callBackName = "LoginListener|";
+
     @Override
     public String[] getArgumentsDescription() {
         return new String[] { "<Confirm Username>" };

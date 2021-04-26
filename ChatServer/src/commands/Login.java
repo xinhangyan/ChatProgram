@@ -18,15 +18,16 @@ public class Login implements Command {
         return "Login to account.";
     }
 
+    private final String callBackName = "LoginListener|";
     @Override
     public void execute(String argument, ClientWorker clientWorker) throws IOException {
         if (clientWorker.getUser() != null) {
-            clientWorker.writeLine("You are already logged in!");
+            clientWorker.writeLine(callBackName+"You are already logged in!");
             return;
         }
         String[] arguments = argument.split(" ");
         if (arguments.length != 2) {
-            clientWorker.writeLine("Invalid arguments.");
+            clientWorker.writeLine(callBackName+"Invalid arguments.");
             return;
         }
         String username = arguments[0];
@@ -35,7 +36,7 @@ public class Login implements Command {
         UserDatabase userDatabase = UserDatabase.getSingleton();
 
         if (userDatabase.getOnlineUsers().contains(username)) {
-            clientWorker.writeLine("This user is already online.");
+            clientWorker.writeLine(callBackName+"This user is already online.");
             return;
         }
 
@@ -43,9 +44,9 @@ public class Login implements Command {
 
         if (user != null) {
             clientWorker.setUser(user);
-            clientWorker.writeLine("You are now logged in!");
+            clientWorker.writeLine(callBackName+user.getUsername()+" are now logged in!");
         } else {
-            clientWorker.writeLine("Unable to login.");
+            clientWorker.writeLine(callBackName+"Unable to login.");
         }
     }
 }

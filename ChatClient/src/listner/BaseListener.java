@@ -10,33 +10,30 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 public class BaseListener implements ActionListener {
+
+    public BaseListener() {
+        ChatClient.listenerMap.put(this.getClass().getSimpleName(),this);
+        System.out.println("listenerMap register "+this.getClass().getSimpleName());
+    }
+
     //send message to server
-    public String send(String msg){
-        String s = "try again!";
+    public void send(String msg){
         try {
-            ChatClient.writer.write(s);
+            ChatClient.writer.write(msg);
             ChatClient.writer.newLine();
             ChatClient.writer.flush();
-            s = ChatClient.reader.readLine();
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
-        return s;
-    }
-
-    //exit program when close windows
-    private void windowClose(Frame frame){
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
+    }
+
+    public void callBack(String msg){
 
     }
 }

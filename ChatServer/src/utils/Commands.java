@@ -19,7 +19,7 @@ public class Commands {
         commandHashMap.put("register", new Register());
         commandHashMap.put("login", new Login());
         commandHashMap.put("delete", new Delete());
-        commandHashMap.put("addu", new FriendByUsername());
+        commandHashMap.put("addfriend", new FriendByUsername());
         commandHashMap.put("help", helpCommand);
         commandHashMap.put("exit", new Exit());
 
