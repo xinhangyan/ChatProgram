@@ -12,7 +12,7 @@ public class ProfileFrame extends JFrame {
     public ProfileFrame() {
         int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
         int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
-        setBounds((screenWidth - 400)/2,(screenHeight-300)/2,400,340);
+        setBounds((screenWidth - 400)/2,(screenHeight-300)/2,410,390);
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
 

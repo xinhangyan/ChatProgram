@@ -2,6 +2,7 @@ package listner;
 
 import models.TransDto;
 import models.User;
+import view.BaseDialog;
 import works.ChatClient;
 
 import javax.swing.*;
@@ -45,13 +46,7 @@ public class AddFriendListener extends BaseListener{
             jPanel.repaint();
         } else {
             jButton.setVisible(false);
-            JDialog jDialog = new JDialog();
-            int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
-            int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
-            jDialog.setBounds((screenWidth - 400)/2+400,(screenHeight-300)/2+100,300,200);
-            jDialog.setLayout(new FlowLayout());
-            jDialog.add(new Label(dto.getMsg()));
-            jDialog.setVisible(true);
+            new BaseDialog(dto.getMsg());
         }
     }
 }

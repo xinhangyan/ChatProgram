@@ -1,5 +1,6 @@
 package models;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.TreeSet;
 
@@ -12,12 +13,20 @@ public class User implements Comparable<User>, Serializable {
     private String photoURL; // Should use URL?
     private String email;
     private String favorite;
+    @Serial
     private TreeSet<Integer> friends;
     private TreeSet<Integer> pendingFriendRequests;
     private TreeSet<Integer> sendingFriendRequests;
     private Integer isPrivate;//0、所有人可见 1、好友可见 2、自己可见
     private boolean online;
     private static final long serialVersionUID = 2L;
+
+    public User(String username, String description, String email, String favorite) {
+        this.username = username;
+        this.description = description;
+        this.email = email;
+        this.favorite = favorite;
+    }
 
     public User(User user) {
         this.id = user.id;
@@ -175,7 +184,7 @@ public class User implements Comparable<User>, Serializable {
 
     @Override
     public int compareTo(User o) {
-        return this.getId() - o.getId();
+        return this.hashCode() - o.hashCode();
     }
 
     @Override
@@ -198,24 +207,10 @@ public class User implements Comparable<User>, Serializable {
     }
 
     public String getSaveString() {
-        StringBuilder friendsSb = new StringBuilder("|");
-        StringBuilder pendingFriendRequestsSb = new StringBuilder("|");
-        StringBuilder sendingFriendRequestsSb = new StringBuilder("|");
-        friends.forEach(e -> friendsSb.append(e).append("|"));
-        pendingFriendRequests.forEach(e -> pendingFriendRequestsSb.append(e).append("|"));
-        sendingFriendRequests.forEach(e -> sendingFriendRequestsSb.append(e).append("|"));
-
-        return id +
-                "," + username +
-                "," + realName +
-                "," + password +
+        return  username +
                 "," + description +
                 "," + email +
-                "," + favorite +
-                "," + isPrivate +
-                "," + friendsSb.toString() +
-                "," + pendingFriendRequestsSb.toString() +
-                "," + sendingFriendRequestsSb.toString();
+                "," + favorite ;
 
     }
 }

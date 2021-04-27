@@ -6,7 +6,7 @@ import models.TransDto;
 import models.User;
 import workers.ClientWorker;
 
-import java.io.IOException;
+import java.io.*;
 
 public class UserList implements Command {
     @Override
@@ -26,6 +26,10 @@ public class UserList implements Command {
         TransDto transDto = new TransDto(true, "userlist", dto.getSource(), "");
         transDto.setUsers(users);
         transDto.setUser(clientWorker.getUser());
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ObjectOutputStream output = new ObjectOutputStream(byteArrayOutputStream);
+        output.writeObject(clientWorker.getUser());
+        System.out.println(byteArrayOutputStream.toString());
         clientWorker.write(transDto);
     }
 }

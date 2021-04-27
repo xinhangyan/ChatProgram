@@ -92,6 +92,9 @@ public class PendButtonListener extends BaseListener{
             JButton accept = new JButton("accept");
             accept.setBounds(260,10,80,30);
 
+            JButton reject = new JButton("refuse");
+            reject.setBounds(260,45,80,30);
+
             jPanel.add(image);
             jPanel.add(username);
             jPanel.add(userNameLab);
@@ -106,7 +109,8 @@ public class PendButtonListener extends BaseListener{
             jPanel.setVisible(true);
             jPanel1.add(jPanel);
 
-            accept.addActionListener(new AcceptListener(user.getUsername(),accept,jPanel));
+            accept.addActionListener(new AcceptListener(user.getUsername(),accept,reject,jPanel));
+            reject.addActionListener(new RejectListener(user.getUsername(),accept,reject,jPanel));
         }
         JScrollPane jScrollPane = new JScrollPane(jPanel1);
         jScrollPane.setVisible(true);

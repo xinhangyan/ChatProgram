@@ -1,21 +1,19 @@
 package listner;
 
 import models.TransDto;
-import models.User;
 import view.AllFrame;
 import works.ChatClient;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.net.URL;
 
-public class AcceptListener extends BaseListener{
+public class RejectListener extends BaseListener{
     String username;
     JButton accept;
     JButton reject;
     JPanel jPanel;
     String key;
-    public AcceptListener(String username,JButton accept,JButton reject,JPanel jPanel) {
+    public RejectListener(String username,JButton accept,JButton reject,JPanel jPanel) {
         super(username);
         key = username;
         this.username = username;
@@ -27,8 +25,8 @@ public class AcceptListener extends BaseListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         TransDto transDto = new TransDto();
-        transDto.setSource("AcceptListener"+key);
-        transDto.setTarget("accept");
+        transDto.setSource("RejectListener"+key);
+        transDto.setTarget("reject");
         transDto.setUsername(username);
         send(transDto);
     }
@@ -43,7 +41,7 @@ public class AcceptListener extends BaseListener{
             AllFrame.profileCenterPanel.repaint();
             jPanel.remove(accept);
             jPanel.remove(reject);
-            JLabel accept = new JLabel("your friends");
+            JLabel accept = new JLabel("rejected");
             accept.setBounds(accept.getBounds());
             jPanel.add(accept);
             jPanel.repaint();

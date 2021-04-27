@@ -1,6 +1,7 @@
 package view.profile;
 
 import listner.EditProfileListener;
+import listner.ProfileDeleteListener;
 import models.User;
 import view.AllFrame;
 import works.ChatClient;
@@ -37,6 +38,9 @@ public class ProfileTopPanel extends JPanel {
         JButton jButton = new JButton("edit");
         jButton.setBounds(300,10,80,20);
 
+        JButton delete = new JButton("delete");
+        delete.setBounds(300,35,80,20);
+
         JLabel userNameLab = new JLabel();
         userNameLab.setText("username:");
         userNameLab.setBounds(150,20,60,20);
@@ -70,6 +74,7 @@ public class ProfileTopPanel extends JPanel {
         AllFrame.favorite = favorite;
         AllFrame.abortMe = desc;
 
+        add(delete);
         add(jButton);
         add(image);
         add(username);
@@ -83,5 +88,6 @@ public class ProfileTopPanel extends JPanel {
         setVisible(true);
 
         jButton.addActionListener(new EditProfileListener(jButton,username,email,favorite,desc));
+        delete.addActionListener(new ProfileDeleteListener());
     }
 }

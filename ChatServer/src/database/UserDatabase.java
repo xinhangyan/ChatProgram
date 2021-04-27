@@ -38,6 +38,11 @@ public class UserDatabase {
 
     public synchronized void deleteUser(User user) {
         userList.remove(user);
+        for (User otherUser : userList) {
+            otherUser.getSendingFriendRequests().remove(user.getId());
+            otherUser.getPendingFriendRequests().remove(user.getId());
+            otherUser.getSendingFriendRequests().remove(user.getId());
+        }
     }
 
     public List<String> getUsernamesByIds(TreeSet<Integer> ids) {
@@ -52,6 +57,19 @@ public class UserDatabase {
             return null;
         }
         return new User(user);
+    }
+
+    public synchronized boolean removePending(ClientWorker clientWorker,String username) {
+
+        User user = userList.stream().filter(x -> x.getUsername().equals(username)).findAny().orElse(null);
+        if (user != null) {
+            //删除用户自己列表里的
+            clientWorker.getUser().getPendingFriendRequests().remove(user.getId());
+            //删除对方用户列表里的
+            user.getSendingFriendRequests().remove(clientWorker.getUser().getId());
+            return true;
+        }
+        return false;
     }
 
     public synchronized User authenticateAndGetUser(String username, String password) {

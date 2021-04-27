@@ -27,7 +27,7 @@ public class WaitAccepButtontListener extends BaseListener{
         AllFrame.friendListJFrame = this.jFrame;
 
         TransDto transDto = new TransDto();
-        transDto.setIds(ChatClient.user.getPendingFriendRequests().toArray(new Integer[0]));
+        transDto.setIds(ChatClient.user.getSendingFriendRequests().toArray(new Integer[0]));
         transDto.setSource("WaitAccepButtontListener");
         transDto.setTarget("userlist");
         send(transDto);
