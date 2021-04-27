@@ -2,7 +2,7 @@ package listner;
 
 import models.TransDto;
 import view.AllFrame;
-import view.ProfileFrame;
+import view.profile.ProfileFrame;
 import works.ChatClient;
 
 import java.awt.*;
@@ -32,6 +32,7 @@ public class RegisterListener extends BaseListener{
 
     @Override
     public void callBack(TransDto dto) {
+        super.callBack(dto);
         //提示
         errorLabel.setText(dto.getMsg());
         errorLabel.setAlignment(Label.CENTER);
@@ -39,10 +40,9 @@ public class RegisterListener extends BaseListener{
         if(dto.isSuccess()){
             //注册成功，隐藏登录面板，打开主面板，返回用户id赋值给user对象
             System.out.println("注册成功");
+            ChatClient.user = dto.getUser();
             AllFrame.profileFrame = new ProfileFrame();
             AllFrame.loginFrame.setVisible(false);
-            ChatClient.user = dto.getUser();
         }
-        System.out.println(dto.toString());
     }
 }

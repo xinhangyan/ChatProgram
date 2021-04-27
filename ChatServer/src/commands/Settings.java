@@ -31,7 +31,11 @@ public class Settings implements Command {
         user.setDescription(modify.getDescription());
         user.setPhotoURL(modify.getPhotoURL());
         user.setPrivate(modify.isPrivate());
-        clientWorker.write(new TransDto(true,"set",dto.getSource(),"success!"));
+        user.setEmail(modify.getEmail());
+        user.setFavorite(modify.getFavorite());
+        TransDto transDto = new TransDto(true, "set", dto.getSource(), "success!");
+        transDto.setUser(user);
+        clientWorker.write(transDto);
 
     }
 

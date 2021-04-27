@@ -1,5 +1,6 @@
 package database;
 
+import models.TransDto;
 import models.User;
 import utils.CustomLogger;
 import workers.ClientWorker;
@@ -17,7 +18,7 @@ public class UserDatabase {
     private final CustomLogger logger = CustomLogger.getSingleton();
 
     private UserDatabase() {
-        this("../database.csv");
+        this("ChatServer/database.csv");
     }
 
     private UserDatabase(String pathToDatabase) {
@@ -60,18 +61,22 @@ public class UserDatabase {
                 .orElse(null);
     }
 
-    public synchronized boolean friendUserByUsername(User user, String username) {
+    public synchronized String friendUserByUsername(User user, String username) {
         User targetUser = userList.stream().filter(e -> e.getUsername().equals(username)).findAny().orElse(null);
 
         if (targetUser == null ||
                 targetUser.getPendingFriendRequests().contains(user.getId()) ||
-                user.getFriends().contains(targetUser.getId())) {
-            return false;
+                user.getFriends().contains(targetUser.getId()) ) {
+            return "Sorry, but maybe you already added them?";
+        }
+
+        if(user.getPendingFriendRequests().contains(targetUser.getId())){
+            return "Sorry, but maybe he has in your pending?";
         }
 
         targetUser.getPendingFriendRequests().add(user.getId());
-
-        return true;
+        user.getSendingFriendRequests().add(targetUser.getId());
+        return "";
     }
 
     public synchronized boolean friendUserById(User user, int id) {
@@ -109,6 +114,10 @@ public class UserDatabase {
         return onlineUsers;
     }
 
+    public User[] getAllUsers() {
+        return userList.stream().toArray(User[]::new);
+    }
+
     public User[] getOnlineUserArray() {
         int size = activeSessions.size();
         User[] users = new User[size];
@@ -122,17 +131,22 @@ public class UserDatabase {
         TreeSet<Integer> friends = user.getFriends();
         return friends.stream().map(x -> {
             return userList.stream().filter(y -> y.getId() == x).findAny().orElse(null);
-        }).filter(Objects::nonNull).toArray(User[]::new);
+        }).filter(Objects::nonNull)
+                .peek(y->y.setOnline(activeSessions.stream().anyMatch(z->z.getUser().getId()==y.getId())))
+                .toArray(User[]::new);
     }
 
     public User[] getUsers(Integer[] usernames) {
         return Arrays.stream(usernames).map(x -> {
             return userList.stream().filter(y -> y.getId()==x).findAny().orElse(null);
-        }).filter(Objects::nonNull).toArray(User[]::new);
+        }).filter(Objects::nonNull)
+                .peek(y->y.setOnline(activeSessions.stream().anyMatch(z->z.getUser().getId()==y.getId())))
+                .toArray(User[]::new);
     }
 
     public synchronized void loadProfiles() throws IOException {
         File databaseFile = new File(DATABASE_FILENAME);
+        System.out.println(databaseFile.getAbsolutePath());
         if (!databaseFile.exists()) {
             throw new FileNotFoundException("Database file doesn't exist.");
         }
@@ -143,21 +157,29 @@ public class UserDatabase {
         while ((line = bufferedReader.readLine()) != null) {
             String[] data = line.split(",");
             int id = Integer.parseInt(data[0]);
-            TreeSet<Integer> friendList = Arrays.stream(data[5].split("\\|"))
+            TreeSet<Integer> friendList = Arrays.stream(data[8].split("\\|"))
                                              .filter(e -> !"".equals(e))
                                              .mapToInt(Integer::parseInt)
                                              .boxed()
                                              .collect(Collectors.toCollection(
                                                      TreeSet::new
                                              ));
-            TreeSet<Integer> requestList = Arrays.stream(data[6].split("\\|"))
+            TreeSet<Integer> requestList = Arrays.stream(data[9].split("\\|"))
                                               .filter(e -> !"".equals(e))
                                               .mapToInt(Integer::parseInt)
                                               .boxed()
                                               .collect(Collectors.toCollection(
                                                       TreeSet::new
                                               ));
-            userList.add(new User(id, data[1], data[2], data[3], data[4], friendList, requestList));
+
+            TreeSet<Integer> sendRequestList = Arrays.stream(data[10].split("\\|"))
+                    .filter(e -> !"".equals(e))
+                    .mapToInt(Integer::parseInt)
+                    .boxed()
+                    .collect(Collectors.toCollection(
+                            TreeSet::new
+                    ));
+            userList.add(new User(id, data[1], data[2], data[3], data[4], data[5], data[6], Integer.parseInt(data[7]), friendList, requestList,sendRequestList));
         }
 
         bufferedReader.close();
@@ -166,7 +188,7 @@ public class UserDatabase {
     public void saveProfiles() throws IOException {
         File databaseFile = new File(DATABASE_FILENAME);
         PrintWriter printWriter = new PrintWriter(databaseFile);
-        printWriter.println("id,username,realName,password,description,friends,pendingFriendRequests");
+        printWriter.println("id,username,realName,password,description,email,favorite,isPrivate,friends,pendingFriendRequests,sendingFriendRequests");
         for (User user : userList) {
             printWriter.println(user.getSaveString());
         }

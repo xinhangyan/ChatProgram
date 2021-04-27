@@ -50,10 +50,12 @@ public class ClientWorker extends Thread {
                 commandHandler.onCommand(transDto);
             } catch (IOException e) {
                 e.printStackTrace();
+                isClientOnline = false;
             } catch (NullPointerException e) {
                 isClientOnline = false;
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
+                isClientOnline = false;
             }
         }
 

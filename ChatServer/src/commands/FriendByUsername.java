@@ -31,8 +31,10 @@ public class FriendByUsername implements Command {
             return;
         }
         UserDatabase userDatabase = UserDatabase.getSingleton();
-        boolean result = userDatabase.friendUserByUsername(user, dto.getUsername());
-        clientWorker.write(new TransDto(false,"addfriend",dto.getSource(),result ? "Friend request sent." : "Sorry, but maybe you already added them?"));
+        String result = userDatabase.friendUserByUsername(user, dto.getUsername());
+        TransDto returnDto = new TransDto(result.length() == 0, "addfriend", dto.getSource(), result.length() == 0 ? "Friend request sent." : result);
+        returnDto.setUser(clientWorker.getUser());
+        clientWorker.write(returnDto);
 
         for (ClientWorker activeSession : userDatabase.getActiveSessions()) {
             User targetUser = activeSession.getUser();

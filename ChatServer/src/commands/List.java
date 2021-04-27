@@ -8,6 +8,7 @@ import workers.ClientWorker;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class List implements Command {
     @Override
@@ -23,9 +24,16 @@ public class List implements Command {
     @Override
     public void execute(TransDto dto, ClientWorker clientWorker) throws IOException {
         UserDatabase userDatabase = UserDatabase.getSingleton();
+        User[] allUsers = userDatabase.getAllUsers();
         User[] users = userDatabase.getOnlineUserArray();
+        User[] returnUsers = Arrays.stream(allUsers)
+                .filter(x->x.getId()!=clientWorker.getUser().getId())
+                .peek(user -> user.setOnline(Arrays.stream(users).anyMatch(x -> x.getId() == user.getId())))
+                .toArray(User[]::new);
+
         TransDto transDto = new TransDto(true, "list", dto.getSource(), "");
-        transDto.setUsers(users);
+        transDto.setUsers(returnUsers);
+        transDto.setUser(clientWorker.getUser());
         clientWorker.write(transDto);
     }
 }

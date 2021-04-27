@@ -1,11 +1,8 @@
 package listner;
 
 import models.TransDto;
-import view.AllFrame;
-import view.ProfileFrame;
 import works.ChatClient;
 
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 
@@ -27,6 +24,7 @@ public class ExitListener extends BaseListener{
     @Override
     public void callBack(TransDto dto) {
         //提示
+        super.callBack(dto);
 
     }
 }

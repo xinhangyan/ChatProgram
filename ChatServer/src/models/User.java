@@ -12,9 +12,13 @@ public class User implements Comparable<User>, Serializable {
     private String password;
     private String description;
     private String photoURL; // Should use URL?
+    private String email;
+    private String favorite;
     private TreeSet<Integer> friends;
     private TreeSet<Integer> pendingFriendRequests;
-    private boolean isPrivate;
+    private TreeSet<Integer> sendingFriendRequests;
+    private Integer isPrivate;//0、所有人可见 1、好友可见 2、自己可见
+    private boolean online;
     private static final long serialVersionUID = 2L;
 
     public User(User user) {
@@ -37,20 +41,42 @@ public class User implements Comparable<User>, Serializable {
         this.description = "This user hasn't wrote anything yet.";
         this.friends = new TreeSet<>();
         this.pendingFriendRequests = new TreeSet<>();
+        this.sendingFriendRequests = new TreeSet<>();
         this.photoURL = "https://www.gravatar.com/avatar/?d=mp";
-        this.isPrivate = false;
+        this.email = "";
+        this.favorite = "";
+        this.isPrivate = 0;
     }
 
-    public User(Integer id, String username, String realName, String password, String description, TreeSet<Integer> friends, TreeSet<Integer> pendingFriendRequests) {
+    public User(Integer id, String username, String realName, String password, String description, String email, String favorite, Integer isPrivate, TreeSet<Integer> friends, TreeSet<Integer> pendingFriendRequests, TreeSet<Integer> sendingFriendRequests) {
         this.id = id;
         this.username = username;
         this.realName = realName;
         this.password = password;
         this.description = description;
+        this.photoURL = "https://www.gravatar.com/avatar/?d=mp";
+        this.email = email;
+        this.favorite = favorite;
         this.friends = friends;
         this.pendingFriendRequests = pendingFriendRequests;
-        this.isPrivate = false;
-        this.photoURL = "https://www.gravatar.com/avatar/?d=mp";
+        this.sendingFriendRequests = sendingFriendRequests;
+        this.isPrivate = isPrivate;
+    }
+
+    public Integer getIsPrivate() {
+        return isPrivate;
+    }
+
+    public void setIsPrivate(Integer isPrivate) {
+        this.isPrivate = isPrivate;
+    }
+
+    public boolean isOnline() {
+        return online;
+    }
+
+    public void setOnline(boolean online) {
+        this.online = online;
     }
 
     public void setId(Integer id) {
@@ -77,7 +103,7 @@ public class User implements Comparable<User>, Serializable {
         this.pendingFriendRequests = pendingFriendRequests;
     }
 
-    public void setPrivate(boolean aPrivate) {
+    public void setPrivate(Integer aPrivate) {
         isPrivate = aPrivate;
     }
 
@@ -121,8 +147,32 @@ public class User implements Comparable<User>, Serializable {
         return id;
     }
 
-    public boolean isPrivate() {
+    public Integer isPrivate() {
         return isPrivate;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(String favorite) {
+        this.favorite = favorite;
+    }
+
+    public TreeSet<Integer> getSendingFriendRequests() {
+        return sendingFriendRequests;
+    }
+
+    public void setSendingFriendRequests(TreeSet<Integer> sendingFriendRequests) {
+        this.sendingFriendRequests = sendingFriendRequests;
     }
 
     @Override
@@ -138,23 +188,36 @@ public class User implements Comparable<User>, Serializable {
                 ", realName='" + realName + '\'' +
                 ", password='" + password + '\'' +
                 ", description='" + description + '\'' +
+                ", photoURL='" + photoURL + '\'' +
+                ", email='" + email + '\'' +
+                ", favorite='" + favorite + '\'' +
                 ", friends=" + friends +
                 ", pendingFriendRequests=" + pendingFriendRequests +
+                ", sendingFriendRequests=" + sendingFriendRequests +
+                ", isPrivate=" + isPrivate +
+                ", online=" + online +
                 '}';
     }
 
     public String getSaveString() {
         StringBuilder friendsSb = new StringBuilder("|");
         StringBuilder pendingFriendRequestsSb = new StringBuilder("|");
+        StringBuilder sendingFriendRequestsSb = new StringBuilder("|");
         friends.forEach(e -> friendsSb.append(e).append("|"));
         pendingFriendRequests.forEach(e -> pendingFriendRequestsSb.append(e).append("|"));
+        sendingFriendRequests.forEach(e -> sendingFriendRequestsSb.append(e).append("|"));
 
         return id +
                 "," + username +
                 "," + realName +
                 "," + password +
                 "," + description +
+                "," + email +
+                "," + favorite +
+                "," + isPrivate +
                 "," + friendsSb.toString() +
-                "," + pendingFriendRequestsSb.toString();
+                "," + pendingFriendRequestsSb.toString() +
+                "," + sendingFriendRequestsSb.toString();
+
     }
 }

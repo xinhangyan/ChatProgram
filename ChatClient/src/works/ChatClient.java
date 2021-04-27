@@ -4,14 +4,12 @@ import listner.BaseListener;
 import models.TransDto;
 import models.User;
 import view.AllFrame;
-import view.LoginFrame;
+import view.login.LoginFrame;
 
 import java.io.*;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Objects;
-import java.util.Scanner;
 
 public class ChatClient extends Thread{
     public static ObjectInputStream ois;

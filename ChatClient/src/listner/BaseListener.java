@@ -17,6 +17,12 @@ public class BaseListener implements ActionListener {
         System.out.println("listenerMap register "+this.getClass().getSimpleName());
     }
 
+    //同一个类实例化多个对象的时候，会导致callback回调出错，所以需要带点特征值
+    public BaseListener(String args) {
+        ChatClient.listenerMap.put(this.getClass().getSimpleName()+args,this);
+        System.out.println("listenerMap register "+this.getClass().getSimpleName()+args);
+    }
+
     //send message to server
     public void send(TransDto dto){
         try {
@@ -33,7 +39,8 @@ public class BaseListener implements ActionListener {
 
     }
 
-    public void callBack(TransDto msg){
+    public void callBack(TransDto dto){
+        System.out.println(dto.toString());
 
     }
 }

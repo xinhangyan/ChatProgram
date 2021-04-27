@@ -20,10 +20,10 @@ public class ReceiveAcceptListener extends BaseListener{
 
     @Override
     public void callBack(TransDto dto) {
+        super.callBack(dto);
         if(dto.isSuccess()){
             ChatClient.user.setPendingFriendRequests(dto.getUser().getPendingFriendRequests());
-            jButton.setText("pend "+dto.getUser().getPendingFriendRequests().size());
+            jButton.setText("pend "+"("+ ChatClient.user.getPendingFriendRequests().size()+")");
         }
-        System.out.println(dto.toString());
     }
 }

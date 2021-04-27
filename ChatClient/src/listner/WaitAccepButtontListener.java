@@ -14,11 +14,10 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
-import java.util.Optional;
 
-public class PendButtonListener extends BaseListener{
+public class WaitAccepButtontListener extends BaseListener{
     private JFrame jFrame;
-    public PendButtonListener() {
+    public WaitAccepButtontListener() {
         super();
     }
 
@@ -29,7 +28,7 @@ public class PendButtonListener extends BaseListener{
 
         TransDto transDto = new TransDto();
         transDto.setIds(ChatClient.user.getPendingFriendRequests().toArray(new Integer[0]));
-        transDto.setSource("PendButtonListener");
+        transDto.setSource("WaitAccepButtontListener");
         transDto.setTarget("userlist");
         send(transDto);
     }
@@ -37,7 +36,7 @@ public class PendButtonListener extends BaseListener{
     @Override
     public void callBack(TransDto dto) {
         super.callBack(dto);
-        ChatClient.user = dto.getUser();
+
         User[] users = dto.getUsers();
         JPanel jPanel1 = new JPanel();
         jPanel1.setSize( 380, 200*users.length);
@@ -89,9 +88,10 @@ public class PendButtonListener extends BaseListener{
             desc.setText(user.getDescription());
             desc.setBounds(30,130,300,50);
 
-            JButton accept = new JButton("accept");
-            accept.setBounds(260,10,80,30);
+            Label statusLabel = new Label(user.isOnline()?"online":"offline");
+            statusLabel.setBounds(260,10,80,30);
 
+            jPanel.add(statusLabel);
             jPanel.add(image);
             jPanel.add(username);
             jPanel.add(userNameLab);
@@ -101,12 +101,9 @@ public class PendButtonListener extends BaseListener{
             jPanel.add(favoriteLab);
             jPanel.add(desc);
             jPanel.add(descLab);
-            jPanel.add(accept);
             jPanel.setBorder(BorderFactory.createBevelBorder(0));
             jPanel.setVisible(true);
             jPanel1.add(jPanel);
-
-            accept.addActionListener(new AcceptListener(user.getUsername(),accept,jPanel));
         }
         JScrollPane jScrollPane = new JScrollPane(jPanel1);
         jScrollPane.setVisible(true);

@@ -2,56 +2,48 @@ package listner;
 
 import models.TransDto;
 import models.User;
+import view.AllFrame;
+import works.ChatClient;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.net.URL;
 
 public class AcceptListener extends BaseListener{
-    JScrollPane panel;
-    public AcceptListener(JScrollPane jPanel) {
-        super();
-        this.panel = jPanel;
+    String username;
+    JButton jButton;
+    JPanel jPanel;
+    String key;
+    public AcceptListener(String username,JButton jButton,JPanel jPanel) {
+        super(username);
+        key = username;
+        this.username = username;
+        this.jButton = jButton;
+        this.jPanel = jPanel;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         TransDto transDto = new TransDto();
-        transDto.setSource("FriendsListListner");
-        transDto.setTarget("friendlist");
+        transDto.setSource("AcceptListener"+key);
+        transDto.setTarget("accept");
+        transDto.setUsername(username);
         send(transDto);
     }
 
     @Override
     public void callBack(TransDto dto) {
-
+        super.callBack(dto);
         if(dto.isSuccess()){
-            User[] users = dto.getUsers();
-            for (int i = 0; i < users.length; i++) {
-                User user = users[i];
-                JPanel jPanel = new JPanel();
-                jPanel.setBounds(0,i*100,400,100);
-                jPanel.setLayout(null);
-
-                JLabel image = new JLabel();
-                URL resource = this.getClass().getResource(user.getPhotoURL());
-                ImageIcon imageIcon = new ImageIcon(resource);
-                image.setIcon(imageIcon);
-                image.setBounds(10,10,90,90);
-                JLabel username = new JLabel();
-                username.setText(user.getUsername());
-                username.setBounds(150,20,30,20);
-                JLabel desc = new JLabel();
-                desc.setText(user.getDescription());
-                desc.setBounds(150,50,150,50);
-                jPanel.add(image);
-                jPanel.add(username);
-                jPanel.add(desc);
-                jPanel.setVisible(true);
-                panel.add(jPanel);
-            }
-
+            ChatClient.user = dto.getUser();
+            AllFrame.profileCenterPanelPendButton.setText("pend"+"("+ChatClient.user.getPendingFriendRequests().size()+")");
+            AllFrame.profileCenterPanelPendButton.repaint();
+            AllFrame.profileCenterPanel.repaint();
+            jPanel.remove(jButton);
+            JLabel accept = new JLabel("your friends");
+            accept.setBounds(300,20,80,30);
+            jPanel.add(accept);
+            jPanel.repaint();
         }
-        System.out.println(dto.toString());
     }
 }

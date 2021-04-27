@@ -1,8 +1,7 @@
 package listner;
 
 import models.TransDto;
-import view.AllFrame;
-import view.ProfileFrame;
+import models.User;
 import works.ChatClient;
 
 import javax.swing.*;
@@ -10,40 +9,49 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class AddFriendListener extends BaseListener{
-    JLabel jLabel;
-    JTextField jTextField;
-    JDialog jDialog;
-    public AddFriendListener(JLabel jLabel,JTextField jTextField,JDialog jDialog) {
-        super();
-        this.jLabel = jLabel;
-        this.jTextField = jTextField;
-        this.jDialog = jDialog;
+    JButton jButton;
+    JPanel jPanel;
+    User user;
+    String key;
+
+    public AddFriendListener(JButton jButton, JPanel jPanel, User user) {
+        super(jButton.getText()+user.getId());
+        key =jButton.getText()+user.getId();
+        this.jButton = jButton;
+        this.jPanel = jPanel;
+        this.user = user;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         TransDto transDto = new TransDto();
-        transDto.setUsername(jTextField.getText());
-        transDto.setSource("AddFriendListener");
+        transDto.setUsername(user.getUsername());
+        transDto.setSource("AddFriendListener"+key);
         transDto.setTarget("addfriend");
         send(transDto);
     }
 
     @Override
     public void callBack(TransDto dto) {
+        super.callBack(dto);
         //提示
-        jLabel.setText(dto.getMsg());
-        System.out.println(dto.getMsg());
         if(dto.isSuccess()){
-            //休眠一秒关闭弹窗
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            jDialog.setVisible(false);
-
+            ChatClient.user = dto.getUser();
+            JLabel jLabel = new JLabel("sended");
+            jLabel.setBounds(jButton.getBounds());
+            jLabel.setVisible(true);
+            jPanel.remove(jButton);
+            jPanel.add(jLabel);
+            jPanel.repaint();
+        } else {
+            jButton.setVisible(false);
+            JDialog jDialog = new JDialog();
+            int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+            int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
+            jDialog.setBounds((screenWidth - 400)/2+400,(screenHeight-300)/2+100,300,200);
+            jDialog.setLayout(new FlowLayout());
+            jDialog.add(new Label(dto.getMsg()));
+            jDialog.setVisible(true);
         }
-        System.out.println(dto.toString());
     }
 }

@@ -1,14 +1,12 @@
 package listner;
 
 import models.TransDto;
-import models.User;
 import view.AllFrame;
-import view.ProfileFrame;
+import view.profile.ProfileFrame;
 import works.ChatClient;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.Optional;
 
 public class LoginListener extends BaseListener  {
     TextField name;
@@ -34,6 +32,7 @@ public class LoginListener extends BaseListener  {
 
     @Override
     public void callBack(TransDto dto) {
+        super.callBack(dto);
         //提示
         errorLabel.setText(dto.getMsg());
         errorLabel.setAlignment(Label.CENTER);
@@ -41,11 +40,9 @@ public class LoginListener extends BaseListener  {
         if(dto.isSuccess()){
             //登录成功，隐藏登录面板，打开主面板
             System.out.println("登录成功");
+            ChatClient.user = dto.getUser();
             AllFrame.profileFrame = new ProfileFrame();
             AllFrame.loginFrame.setVisible(false);
-            System.out.println("此处执行");
-            ChatClient.user = dto.getUser();
         }
-        System.out.println(dto.toString());
     }
 }

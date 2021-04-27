@@ -4,6 +4,7 @@ import models.TransDto;
 import models.User;
 import view.AllFrame;
 import view.friendslist.UserListFrame;
+import view.friendslist.UserListJScrollPane;
 import works.ChatClient;
 
 import javax.imageio.ImageIO;
@@ -16,21 +17,23 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.Optional;
 
-public class PendButtonListener extends BaseListener{
+public class AllUserListener extends BaseListener{
     private JFrame jFrame;
-    public PendButtonListener() {
+    JScrollPane jScrollPane;
+//    private JScrollPane jScrollPane;
+    public AllUserListener() {
         super();
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
         this.jFrame = Objects.isNull(AllFrame.friendListJFrame)?new UserListFrame():AllFrame.friendListJFrame;
         AllFrame.friendListJFrame = this.jFrame;
-
+//        this.jScrollPane = Optional.ofNullable(this.jScrollPane).orElse(new UserListJScrollPane());
         TransDto transDto = new TransDto();
-        transDto.setIds(ChatClient.user.getPendingFriendRequests().toArray(new Integer[0]));
-        transDto.setSource("PendButtonListener");
-        transDto.setTarget("userlist");
+        transDto.setSource("AllUserListener");
+        transDto.setTarget("list");
         send(transDto);
     }
 
@@ -89,8 +92,8 @@ public class PendButtonListener extends BaseListener{
             desc.setText(user.getDescription());
             desc.setBounds(30,130,300,50);
 
-            JButton accept = new JButton("accept");
-            accept.setBounds(260,10,80,30);
+            JButton add = new JButton("add");
+            add.setBounds(260,10,80,30);
 
             jPanel.add(image);
             jPanel.add(username);
@@ -101,12 +104,12 @@ public class PendButtonListener extends BaseListener{
             jPanel.add(favoriteLab);
             jPanel.add(desc);
             jPanel.add(descLab);
-            jPanel.add(accept);
+            isAddedOrPending(jPanel,add,user);
             jPanel.setBorder(BorderFactory.createBevelBorder(0));
             jPanel.setVisible(true);
             jPanel1.add(jPanel);
 
-            accept.addActionListener(new AcceptListener(user.getUsername(),accept,jPanel));
+            add.addActionListener(new AddFriendListener(add,jPanel,user));
         }
         JScrollPane jScrollPane = new JScrollPane(jPanel1);
         jScrollPane.setVisible(true);
@@ -116,4 +119,26 @@ public class PendButtonListener extends BaseListener{
         jFrame.getContentPane().add(jScrollPane);
         jFrame.setVisible(true);
     }
+
+    void isAddedOrPending(JPanel jPanel,JButton jButton,User user){
+        boolean isAdded = ChatClient.user.getSendingFriendRequests().contains(user.getId());
+        if(isAdded){
+            JLabel jLabel = new JLabel("sended");
+            jLabel.setBounds(jButton.getBounds());
+            jLabel.setVisible(true);
+            jPanel.add(jLabel);
+        } else if(ChatClient.user.getPendingFriendRequests().contains(user.getId())){
+            jButton.setText("accept");
+            jPanel.add(jButton);
+        } else if(ChatClient.user.getFriends().contains(user.getId())){
+            JLabel jLabel = new JLabel("your friends");
+            jLabel.setBounds(jButton.getBounds());
+            jLabel.setVisible(true);
+            jPanel.add(jLabel);
+        } else {
+            jPanel.add(jButton);
+        }
+
+    }
+
 }

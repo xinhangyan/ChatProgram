@@ -25,6 +25,7 @@ public class UserList implements Command {
         User[] users = userDatabase.getUsers(dto.getIds());
         TransDto transDto = new TransDto(true, "userlist", dto.getSource(), "");
         transDto.setUsers(users);
+        transDto.setUser(clientWorker.getUser());
         clientWorker.write(transDto);
     }
 }

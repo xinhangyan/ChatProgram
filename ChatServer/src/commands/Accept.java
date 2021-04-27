@@ -50,7 +50,9 @@ public class Accept implements Command {
             targetUser.setFriends(targetFriends);
             user.setFriends(friends);
             user.getPendingFriendRequests().remove(targetUser.getId());
-            clientWorker.write(new TransDto(true,"accept",dto.getSource(),"Friend request accepted."));
+            TransDto transDto = new TransDto(true, "accept", dto.getSource(), "Friend request accepted.");
+            transDto.setUser(user);
+            clientWorker.write(transDto);
         }
     }
 }
