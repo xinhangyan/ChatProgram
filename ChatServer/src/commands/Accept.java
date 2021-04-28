@@ -58,6 +58,10 @@ public class Accept implements Command {
             TransDto transDto = new TransDto(true, "accept", dto.getSource(), "Friend request accepted.");
             transDto.setUser(user);
             clientWorker.write(transDto);
+        } else {
+            TransDto transDto = new TransDto(false, "accept", dto.getSource(), "try again");
+            transDto.setUser(user);
+            clientWorker.write(transDto);
         }
     }
 }
