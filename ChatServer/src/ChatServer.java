@@ -11,6 +11,10 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 
+/**
+ *  This is server class.
+ */
+
 public class ChatServer {
     private final static CustomLogger logger = CustomLogger.getSingleton();
     private static UserDatabase database = UserDatabase.getSingleton();
@@ -23,6 +27,7 @@ public class ChatServer {
     public ChatServer(String bindAddress, int port) {
         try {
             logger.info("Trying to load users from database...");
+            // read files from database
             database.loadProfiles();
         } catch (Exception e) {
             logger.error(e.getMessage());

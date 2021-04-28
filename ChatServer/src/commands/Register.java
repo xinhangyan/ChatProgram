@@ -10,6 +10,10 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
+/**
+ *  If not, register a new account.
+ */
+
 public class Register implements Command {
     @Override
     public String[] getArgumentsDescription() {
@@ -48,10 +52,11 @@ public class Register implements Command {
 
         if (!userDatabase.isUserWithUsernamePresent(dto.getUsername())) {
             User user = userDatabase.addUser(dto.getUsername(), dto.getPassword());
+            clientWorker.setUser(user);
+
             TransDto register = new TransDto(true, "register", dto.getSource(), dto.getUsername() + " added.");
             register.setUser(user);
             clientWorker.write(register);
-            clientWorker.setUser(user);
         } else {
             clientWorker.write(new TransDto(false,"register",dto.getSource(),"Unable to add user."));
         }

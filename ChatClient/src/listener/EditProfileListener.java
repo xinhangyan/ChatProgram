@@ -1,4 +1,4 @@
-package listner;
+package listener;
 
 import models.TransDto;
 import models.User;
@@ -7,6 +7,10 @@ import works.ChatClient;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+
+/**
+ *  This class defines possible actions after clicking edit profile button.
+ */
 
 public class EditProfileListener extends BaseListener{
     private JTextArea usernameText;

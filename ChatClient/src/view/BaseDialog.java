@@ -3,6 +3,10 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ *  This class will show a dialog after clicking specific buttons.
+ */
+
 public class BaseDialog extends JDialog {
     private String text;
     public BaseDialog() {

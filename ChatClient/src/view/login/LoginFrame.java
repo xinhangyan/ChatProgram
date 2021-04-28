@@ -1,25 +1,26 @@
 package view.login;
 
-import listner.ExitListener;
-import listner.LoginListener;
-import listner.RegisterListener;
-import works.ChatClient;
+import listener.ExitListener;
+import listener.LoginListener;
+import listener.RegisterListener;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
+
+/**
+ *  This class creates login frame interacted with server.
+ */
 
 public class LoginFrame extends JFrame{
     public LoginFrame() {
-        //设置框架的各种属性
+        // set attributes
         setSize(400,300);
         int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
         int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
         setLocation((screenWidth - 400)/2, (screenHeight-300)/2);
-        setVisible(true);
+
 
         Panel panel0 = new Panel(new GridLayout(2,1));
         Panel panel1 = new Panel(new GridLayout(2,3));
@@ -63,6 +64,8 @@ public class LoginFrame extends JFrame{
                new ExitListener().actionPerformed(null);
             }
         });
+
+        setVisible(true);
     }
 }
 

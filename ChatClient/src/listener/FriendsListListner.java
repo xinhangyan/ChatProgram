@@ -1,10 +1,9 @@
-package listner;
+package listener;
 
 import models.TransDto;
 import models.User;
 import view.AllFrame;
 import view.friendslist.UserListFrame;
-import works.ChatClient;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,11 +13,14 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
-import java.util.Optional;
 
-public class PendButtonListener extends BaseListener{
+/**
+ *  This class defines possible actions after clicking my friends button.
+ */
+
+public class FriendsListListner extends BaseListener{
     private JFrame jFrame;
-    public PendButtonListener() {
+    public FriendsListListner() {
         super();
     }
 
@@ -26,18 +28,16 @@ public class PendButtonListener extends BaseListener{
     public void actionPerformed(ActionEvent e) {
         this.jFrame = Objects.isNull(AllFrame.friendListJFrame)?new UserListFrame():AllFrame.friendListJFrame;
         AllFrame.friendListJFrame = this.jFrame;
-
         TransDto transDto = new TransDto();
-        transDto.setIds(ChatClient.user.getPendingFriendRequests().toArray(new Integer[0]));
-        transDto.setSource("PendButtonListener");
-        transDto.setTarget("userlist");
+        transDto.setSource("FriendsListListner");
+        transDto.setTarget("friendlist");
         send(transDto);
     }
 
     @Override
     public void callBack(TransDto dto) {
         super.callBack(dto);
-        ChatClient.user = dto.getUser();
+
         User[] users = dto.getUsers();
         JPanel jPanel1 = new JPanel();
         jPanel1.setSize( 380, 200*users.length);
@@ -89,12 +89,10 @@ public class PendButtonListener extends BaseListener{
             desc.setText(user.getDescription());
             desc.setBounds(30,130,300,50);
 
-            JButton accept = new JButton("accept");
-            accept.setBounds(260,10,80,30);
+            Label statusLabel = new Label(user.isOnline()?"online":"offline");
+            statusLabel.setBounds(260,10,80,30);
 
-            JButton reject = new JButton("refuse");
-            reject.setBounds(260,45,80,30);
-
+            jPanel.add(statusLabel);
             jPanel.add(image);
             jPanel.add(username);
             jPanel.add(userNameLab);
@@ -104,13 +102,9 @@ public class PendButtonListener extends BaseListener{
             jPanel.add(favoriteLab);
             jPanel.add(desc);
             jPanel.add(descLab);
-            jPanel.add(accept);
             jPanel.setBorder(BorderFactory.createBevelBorder(0));
             jPanel.setVisible(true);
             jPanel1.add(jPanel);
-
-            accept.addActionListener(new AcceptListener(user.getUsername(),accept,reject,jPanel));
-            reject.addActionListener(new RejectListener(user.getUsername(),accept,reject,jPanel));
         }
         JScrollPane jScrollPane = new JScrollPane(jPanel1);
         jScrollPane.setVisible(true);

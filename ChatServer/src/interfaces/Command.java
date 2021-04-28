@@ -5,6 +5,10 @@ import workers.ClientWorker;
 
 import java.io.IOException;
 
+/** This is a command interface
+ *
+ */
+
 public interface Command {
     String[] getArgumentsDescription();
     String getDescription();

@@ -10,6 +10,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ *  Online users list.
+ */
+
 public class List implements Command {
     @Override
     public String[] getArgumentsDescription() {
@@ -33,7 +37,7 @@ public class List implements Command {
 
         TransDto transDto = new TransDto(true, "list", dto.getSource(), "");
         transDto.setUsers(returnUsers);
-        transDto.setUser(clientWorker.getUser());
+        transDto.setUser(userDatabase.getUser(clientWorker.getUser().getUsername()));
         clientWorker.write(transDto);
     }
 }

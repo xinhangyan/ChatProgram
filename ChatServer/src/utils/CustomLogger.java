@@ -9,6 +9,10 @@ public class CustomLogger {
 
     private Logger logger;
 
+    /**
+     *  This class is designed for printing log in controller.
+     */
+
     class LogFormatter extends Formatter {
         private static final String ANSI_RESET = "\u001B[0m";
         private static final String ANSI_RED = "\u001B[31m";

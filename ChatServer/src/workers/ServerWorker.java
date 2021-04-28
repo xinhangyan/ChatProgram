@@ -7,6 +7,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ *  This class defines a thread that can implement to multiple users.
+ */
+
 public class ServerWorker extends Thread {
     private final ServerSocket serverSocket;
     private final CustomLogger logger = CustomLogger.getSingleton();

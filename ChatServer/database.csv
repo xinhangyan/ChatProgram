@@ -1,16 +1,14 @@
 id,username,realName,password,description,email,favorite,isPrivate,friends,pendingFriendRequests,sendingFriendRequests
-2,123,Unnamed,321,This user hasn't wrote anything yet.,123,321,0,|1|4|5|6|,|9|10|11|12|13|14|15|16|,|1|3|4|
-3,321,Unnamed,123,This user hasn't wrote anything yet.,,,0,|,|1|2|4|6|9|10|11|12|15|16|,|
-4,yxh,Unnamed,123,This user hasn't wrote anything yet.,严新航	、,喝水123,0,|1|2|5|9|10|11|,|12|15|16|,|1|3|
-5,1233,Unnamed,321,This user hasn't wrote anything yet.,321,123,0,|1|2|4|,|9|11|,|1|2|4|
-6,1111,Unnamed,1111,This user hasn't wrote anything yet.,,,0,|1|2|,|,|1|2|3|
-7,123321,Unnamed,111,This user hasn't wrote anything yet.,,,0,|1|,|,|1|
-8,12333,Unnamed,1233,This user hasn't wrote anything yet.,,,0,|1|,|,|1|
-9,345,Unnamed,345,This user hasn't wrote anything yet.,,,0,|1|4|,|,|1|2|3|4|5|
-10,456,Unnamed,465,This user hasn't wrote anything yet.,,,0,|1|4|,|,|1|2|3|4|
-11,654,Unnamed,456,This user hasn't wrote anything yet.,zuohaoshL@qq.com,qwer,0,|1|4|,|,|1|2|3|4|5|
-12,999,Unnamed,999,This user hasn't wrote anything yet.,,,0,|1|,|,|1|2|3|4|
-13,888,Unnamed,888,This user hasn't wrote anything yet.,,,0,|1|,|,|1|2|
-14,777,Unnamed,777,This user hasn't wrote anything yet.,,,0,|1|,|,|1|2|
-15,333,Unnamed,333,This user hasn't wrote anything yet.,23,23,0,|1|,|,|1|2|3|4|
-16,111,Unnamed,111,This user hasn't wrote anything yet.,,,0,|,|,|2|3|4|
+1,yan,Unnamed,12345,This user hasn't wrote anything yet.,email,code,0,|2|3|4|7|10|,|11|12|13|,|
+2,jin,Unnamed,12345,friend1,email,code,0,|1|3|4|7|10|,|11|12|13|,|1|
+3,111,Unnamed,111,This user hasn't wrote anything yet.,,,0,|1|2|4|10|12|,|13|,|1|2|4|
+4,123,Unnamed,123,This user hasn't wrote anything yet.,321,123,0,|1|2|3|,|,|1|2|
+5,1234,Unnamed,1234,This user hasn't wrote anything yet.,,,0,|,|,|
+6,1233,Unnamed,1233,This user hasn't wrote anything yet.,,,0,|,|,|
+7,12333,Unnamed,1233,This user hasn't wrote anything yet.,,,0,|1|2|,|,|1|2|
+8,321,Unnamed,123,This user hasn't wrote anything yet.,,,0,|,|,|
+9,234,Unnamed,432,This user hasn't wrote anything yet.,,,0,|,|,|
+10,432,Unnamed,432,This user hasn't wrote anything yet.,,,0,|1|2|3|,|,|1|2|3|
+11,999,Unnamed,999,This user hasn't wrote anything yet.,,,0,|,|,|1|2|
+12,888,Unnamed,888,This user hasn't wrote anything yet.,,,0,|3|,|,|1|2|
+13,777,Unnamed,777,This user hasn't wrote anything yet.,,,0,|,|,|1|2|3|

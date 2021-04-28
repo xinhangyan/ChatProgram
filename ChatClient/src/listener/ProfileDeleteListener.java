@@ -1,11 +1,14 @@
-package listner;
+package listener;
 
 import models.TransDto;
-import view.BaseDialog;
 import works.ChatClient;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+
+/**
+ *  This class defines possible actions after clicking delete profile button.
+ */
 
 public class ProfileDeleteListener extends BaseListener{
     public ProfileDeleteListener() {

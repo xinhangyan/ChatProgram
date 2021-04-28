@@ -1,4 +1,4 @@
-package listner;
+package listener;
 
 import models.TransDto;
 import view.AllFrame;
@@ -8,12 +8,16 @@ import works.ChatClient;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class LoginListener extends BaseListener  {
+/**
+ *  This class defines possible actions after registering a new account.
+ */
+
+public class RegisterListener extends BaseListener{
     TextField name;
     TextField password;
     Label errorLabel;
 
-    public LoginListener(TextField name, TextField password,Label errorLabel) {
+    public RegisterListener(TextField name, TextField password, Label errorLabel) {
         super();
         this.name = name;
         this.password = password;
@@ -25,8 +29,8 @@ public class LoginListener extends BaseListener  {
         TransDto transDto = new TransDto();
         transDto.setUsername(name.getText());
         transDto.setPassword(password.getText());
-        transDto.setSource("LoginListener");
-        transDto.setTarget("login");
+        transDto.setSource("RegisterListener");
+        transDto.setTarget("register");
         send(transDto);
     }
 
@@ -38,8 +42,8 @@ public class LoginListener extends BaseListener  {
         errorLabel.setAlignment(Label.CENTER);
 
         if(dto.isSuccess()){
-            //登录成功，隐藏登录面板，打开主面板
-            System.out.println("登录成功");
+            //注册成功，隐藏登录面板，打开主面板，返回用户id赋值给user对象
+            System.out.println("注册成功");
             ChatClient.user = dto.getUser();
             AllFrame.profileFrame = new ProfileFrame();
             AllFrame.loginFrame.setVisible(false);

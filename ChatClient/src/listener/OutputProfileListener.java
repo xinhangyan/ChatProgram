@@ -1,12 +1,14 @@
-package listner;
+package listener;
 
 import datebase.UserDatabase;
 import view.BaseDialog;
 
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+
+/**
+ *  This class defines possible actions after clicking output(export) button.
+ */
 
 public class OutputProfileListener extends BaseListener{
     @Override

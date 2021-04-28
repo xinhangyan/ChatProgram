@@ -5,6 +5,10 @@ import interfaces.Command;
 
 import java.util.HashMap;
 
+/**
+ *  This class saves command information.
+ */
+
 public class Commands {
     private static Commands commands;
     private final HashMap<String, Command> commandHashMap = new HashMap<>();

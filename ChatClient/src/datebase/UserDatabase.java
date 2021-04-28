@@ -1,12 +1,19 @@
 package datebase;
 
 import models.User;
+import view.AllFrame;
+import view.BaseDialog;
 import works.ChatClient;
 
+import javax.swing.*;
 import java.io.*;
 import java.util.Arrays;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
+
+/**
+ *  This class serves for import and export profile information.
+ */
 
 public class UserDatabase {
     private static UserDatabase userDatabase;
@@ -28,16 +35,18 @@ public class UserDatabase {
     public synchronized void loadProfiles() throws IOException {
         File databaseFile = new File(DATABASE_FILENAME);
         System.out.println(databaseFile.getAbsolutePath());
-        if (!databaseFile.exists()) {
-            throw new FileNotFoundException("Database file doesn't exist.");
-        }
         BufferedReader bufferedReader = new BufferedReader(new FileReader(databaseFile));
 
         String line;
         bufferedReader.readLine(); // Skip firstLine
         while ((line = bufferedReader.readLine()) != null) {
+            line = line+","+"*";//for null
             String[] data = line.split(",");
-            userList.add(new User(data[0], data[1], data[2], data[3]));
+            userList.stream().filter(x->x.getUsername().equals(data[0])).findAny().ifPresent(x->{
+                x.setDescription(data[1]);
+                x.setEmail(data[2]);
+                x.setFavorite(data[3]);
+            });
         }
 
         bufferedReader.close();
@@ -52,6 +61,7 @@ public class UserDatabase {
         printWriter.println("username,description,email,favorite");
         userList.add(ChatClient.user);
         for (User user : userList) {
+            System.out.println(user.getSaveString());
             printWriter.println(user.getSaveString());
         }
         printWriter.close();

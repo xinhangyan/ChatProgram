@@ -8,6 +8,10 @@ import workers.ClientWorker;
 
 import java.io.IOException;
 
+/**
+ *  List friends (users).
+ */
+
 public class FriendsList implements Command {
     @Override
     public String[] getArgumentsDescription() {

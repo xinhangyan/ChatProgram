@@ -1,11 +1,6 @@
 package view;
 
-import listner.PendButtonListener;
-
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class PendFriendListDialog extends JDialog {
     public PendFriendListDialog() {

@@ -1,9 +1,6 @@
 package view;
 
-import listner.AddFriendListener;
-
 import javax.swing.*;
-import java.awt.*;
 
 public class AddFriendDialog extends JDialog {
     public AddFriendDialog() {

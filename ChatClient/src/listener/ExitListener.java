@@ -1,10 +1,14 @@
-package listner;
+package listener;
 
 import models.TransDto;
 import works.ChatClient;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+
+/**
+ *  This class ends the program after closing the frame.
+ */
 
 public class ExitListener extends BaseListener{
     @Override

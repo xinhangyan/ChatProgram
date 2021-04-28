@@ -5,6 +5,10 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ *  This class sets attributes to the user list frame.
+ */
+
 public class UserListFrame extends JFrame {
     public UserListFrame() throws HeadlessException {
         int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;

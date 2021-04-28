@@ -1,4 +1,4 @@
-package listner;
+package listener;
 
 import models.TransDto;
 import view.AllFrame;
@@ -7,13 +7,17 @@ import works.ChatClient;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-public class RejectListener extends BaseListener{
+/**
+ *  This class defines possible actions after clicking accept button.
+ */
+
+public class AcceptListener extends BaseListener{
     String username;
     JButton accept;
     JButton reject;
     JPanel jPanel;
     String key;
-    public RejectListener(String username,JButton accept,JButton reject,JPanel jPanel) {
+    public AcceptListener(String username,JButton accept,JButton reject,JPanel jPanel) {
         super(username);
         key = username;
         this.username = username;
@@ -25,8 +29,8 @@ public class RejectListener extends BaseListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         TransDto transDto = new TransDto();
-        transDto.setSource("RejectListener"+key);
-        transDto.setTarget("reject");
+        transDto.setSource("AcceptListener"+key);
+        transDto.setTarget("accept");
         transDto.setUsername(username);
         send(transDto);
     }
@@ -36,12 +40,12 @@ public class RejectListener extends BaseListener{
         super.callBack(dto);
         if(dto.isSuccess()){
             ChatClient.user = dto.getUser();
-            AllFrame.profileCenterPanelPendButton.setText("pend"+"("+ChatClient.user.getPendingFriendRequests().size()+")");
+            AllFrame.profileCenterPanelPendButton.setText("received"+"("+ChatClient.user.getPendingFriendRequests().size()+")");
             AllFrame.profileCenterPanelPendButton.repaint();
             AllFrame.profileCenterPanel.repaint();
             jPanel.remove(accept);
             jPanel.remove(reject);
-            JLabel accept = new JLabel("rejected");
+            JLabel accept = new JLabel("your friends");
             accept.setBounds(accept.getBounds());
             jPanel.add(accept);
             jPanel.repaint();

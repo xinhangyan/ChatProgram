@@ -8,6 +8,10 @@ import workers.ClientWorker;
 
 import java.io.IOException;
 
+/**
+ *  Add a friend.
+ */
+
 public class FriendByUsername implements Command {
     @Override
     public String[] getArgumentsDescription() {

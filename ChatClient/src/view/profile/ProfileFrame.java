@@ -1,12 +1,16 @@
 package view.profile;
 
-import listner.ExitListener;
+import listener.ExitListener;
 import view.AllFrame;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
+/**
+ *  This class creates a profile frame to add parts.
+ */
 
 public class ProfileFrame extends JFrame {
     public ProfileFrame() {

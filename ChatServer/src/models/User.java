@@ -1,9 +1,14 @@
 package models;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
+
+/**
+ *  This class includes user information.
+ */
 
 public class User implements Comparable<User>, Serializable {
     private Integer id;
@@ -14,10 +19,13 @@ public class User implements Comparable<User>, Serializable {
     private String photoURL; // Should use URL?
     private String email;
     private String favorite;
+    @Serial
     private TreeSet<Integer> friends;
+    @Serial
     private TreeSet<Integer> pendingFriendRequests;
+    @Serial
     private TreeSet<Integer> sendingFriendRequests;
-    private Integer isPrivate;//0、所有人可见 1、好友可见 2、自己可见
+    private Integer isPrivate;//0、public 1、only friends 2、private
     private boolean online;
     private static final long serialVersionUID = 2L;
 
@@ -27,9 +35,13 @@ public class User implements Comparable<User>, Serializable {
         this.password = ""; // Redacted for privacy
         this.realName = user.realName;
         this.description = user.description;
+        this.email = user.email;
+        this.favorite = user.favorite;
         this.friends = user.friends;
         this.pendingFriendRequests = user.pendingFriendRequests;
+        this.sendingFriendRequests = user.sendingFriendRequests;
         this.photoURL = user.photoURL;
+        this.online = user.online;
         this.isPrivate = user.isPrivate;
     }
 

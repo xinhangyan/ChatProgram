@@ -1,21 +1,22 @@
-package listner;
+package listener;
 
 import models.TransDto;
 import models.User;
 import view.AllFrame;
 import view.friendslist.UserListFrame;
-import view.friendslist.UserListJScrollPane;
 import works.ChatClient;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
-import java.util.Optional;
+
+/**
+ *  This class defines possible actions after clicking all user button.
+ */
 
 public class AllUserListener extends BaseListener{
     private JFrame jFrame;

@@ -1,10 +1,14 @@
-package listner;
+package listener;
 
 import models.TransDto;
 import works.ChatClient;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+
+/**
+ *  This class defines possible actions after receiving friend acceptance.
+ */
 
 public class ReceiveAcceptListener extends BaseListener{
     JButton jButton;

@@ -5,6 +5,10 @@ import utils.CustomLogger;
 
 import java.io.IOException;
 
+/**
+ *  This class saves information before exiting the program.
+ */
+
 public class ShutdownWorker extends Thread {
     private final UserDatabase userDatabase = UserDatabase.getSingleton();
     private final CustomLogger logger = CustomLogger.getSingleton();

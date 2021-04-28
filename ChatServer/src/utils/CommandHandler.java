@@ -6,6 +6,10 @@ import workers.ClientWorker;
 
 import java.io.IOException;
 
+/**
+ *  This class handles all commands.
+ */
+
 public class CommandHandler {
     private final ClientWorker clientWorker;
     private final Commands commands = Commands.getSingleton();

@@ -6,6 +6,10 @@ import workers.ClientWorker;
 
 import java.io.IOException;
 
+/**
+ *  Leave the server.
+ */
+
 public class Exit implements Command {
     @Override
     public String[] getArgumentsDescription() {

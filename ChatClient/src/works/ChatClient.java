@@ -1,6 +1,6 @@
 package works;
 
-import listner.BaseListener;
+import listener.BaseListener;
 import models.TransDto;
 import models.User;
 import view.AllFrame;
@@ -10,6 +10,10 @@ import java.io.*;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Objects;
+
+/** This is client class.
+ *
+ */
 
 public class ChatClient extends Thread{
     public static ObjectInputStream ois;
@@ -27,10 +31,10 @@ public class ChatClient extends Thread{
         for (;;) {
             TransDto transDto = (TransDto) ois.readObject();
             BaseListener baseListener = listenerMap.get(transDto.getTarget());
+            System.out.println("callback:"+transDto.toString());
             if(Objects.nonNull(baseListener)){
                 baseListener.callBack(transDto);
             }
-            System.out.println("callback:"+transDto.toString());
         }
 
     }

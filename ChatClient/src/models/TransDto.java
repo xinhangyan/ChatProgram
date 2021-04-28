@@ -3,6 +3,10 @@ package models;
 import java.io.Serializable;
 import java.util.Arrays;
 
+/**
+ *  This class transfers data between client and server.
+ */
+
 public class TransDto implements Serializable {
     private boolean isSuccess;
     private String source;

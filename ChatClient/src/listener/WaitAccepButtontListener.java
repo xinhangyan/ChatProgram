@@ -1,4 +1,4 @@
-package listner;
+package listener;
 
 import models.TransDto;
 import models.User;
@@ -14,6 +14,10 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
+
+/**
+ *  This class defines possible actions after sending friend request.
+ */
 
 public class WaitAccepButtontListener extends BaseListener{
     private JFrame jFrame;

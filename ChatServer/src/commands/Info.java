@@ -8,6 +8,10 @@ import workers.ClientWorker;
 
 import java.io.IOException;
 
+/**
+ *  Show information.
+ */
+
 public class Info implements Command {
 
     @Override

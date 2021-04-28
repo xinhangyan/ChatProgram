@@ -2,7 +2,12 @@ package models;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Optional;
 import java.util.TreeSet;
+
+/**
+ *  This class includes user information.
+ */
 
 public class User implements Comparable<User>, Serializable {
     private Integer id;
@@ -15,7 +20,9 @@ public class User implements Comparable<User>, Serializable {
     private String favorite;
     @Serial
     private TreeSet<Integer> friends;
+    @Serial
     private TreeSet<Integer> pendingFriendRequests;
+    @Serial
     private TreeSet<Integer> sendingFriendRequests;
     private Integer isPrivate;//0、所有人可见 1、好友可见 2、自己可见
     private boolean online;
@@ -184,7 +191,7 @@ public class User implements Comparable<User>, Serializable {
 
     @Override
     public int compareTo(User o) {
-        return this.hashCode() - o.hashCode();
+        return this.getId() - o.getId();
     }
 
     @Override
@@ -208,9 +215,9 @@ public class User implements Comparable<User>, Serializable {
 
     public String getSaveString() {
         return  username +
-                "," + description +
-                "," + email +
-                "," + favorite ;
+                "," + Optional.ofNullable(description).orElse("") +
+                "," + Optional.ofNullable(email).orElse("") +
+                "," + Optional.ofNullable(favorite).orElse("");
 
     }
 }

@@ -1,14 +1,15 @@
-package listner;
+package listener;
 
 import models.TransDto;
 import works.ChatClient;
 
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
+
+/**
+ *  This class defines basic actions, including sending messages to server.
+ */
 
 public class BaseListener implements ActionListener {
 
@@ -40,7 +41,6 @@ public class BaseListener implements ActionListener {
     }
 
     public void callBack(TransDto dto){
-        System.out.println(dto.toString());
 
     }
 }

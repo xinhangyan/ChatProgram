@@ -8,6 +8,9 @@ import workers.ClientWorker;
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
+/**
+ *  This class serves for import and export profile information.
+ */
 
 public class UserDatabase {
     private static UserDatabase userDatabase;
@@ -89,7 +92,7 @@ public class UserDatabase {
         }
 
         if(user.getPendingFriendRequests().contains(targetUser.getId())){
-            return "Sorry, but maybe he has in your pending?";
+            return "Sorry, but maybe he has in your receive?";
         }
 
         targetUser.getPendingFriendRequests().add(user.getId());

@@ -8,6 +8,10 @@ import workers.ClientWorker;
 
 import java.io.*;
 
+/**
+ *  A list of online users.
+ */
+
 public class UserList implements Command {
     @Override
     public String[] getArgumentsDescription() {
@@ -25,11 +29,7 @@ public class UserList implements Command {
         User[] users = userDatabase.getUsers(dto.getIds());
         TransDto transDto = new TransDto(true, "userlist", dto.getSource(), "");
         transDto.setUsers(users);
-        transDto.setUser(clientWorker.getUser());
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        ObjectOutputStream output = new ObjectOutputStream(byteArrayOutputStream);
-        output.writeObject(clientWorker.getUser());
-        System.out.println(byteArrayOutputStream.toString());
+        transDto.setUser(userDatabase.getUser(clientWorker.getUser().getUsername()));
         clientWorker.write(transDto);
     }
 }

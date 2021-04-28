@@ -7,6 +7,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ *  This class saved all possible fields that will be used in other classes.
+ */
+
 public class AllFrame {
     public static Frame loginFrame;
     public static Frame profileFrame;
@@ -14,6 +18,7 @@ public class AllFrame {
     public static JPanel profileCenterPanel;
     public static JButton profileCenterPanelAddButton;
     public static JButton profileCenterPanelPendButton;
+    public static JButton profileCenterPanelSendButton;
     public static JPanel ProfileUnderPanel;
     //profile 
     public static JLabel username;

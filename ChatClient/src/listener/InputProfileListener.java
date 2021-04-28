@@ -1,4 +1,4 @@
-package listner;
+package listener;
 
 import datebase.UserDatabase;
 import models.TransDto;
@@ -7,11 +7,13 @@ import view.AllFrame;
 import view.BaseDialog;
 import works.ChatClient;
 
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.Optional;
+
+/**
+ *  This class defines possible actions after clicking input(import) button.
+ */
 
 public class InputProfileListener extends BaseListener{
     public InputProfileListener() {

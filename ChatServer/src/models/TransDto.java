@@ -1,6 +1,11 @@
 package models;
 
 import java.io.Serializable;
+import java.util.Arrays;
+
+/**
+ *  This class transfers data between client and server.
+ */
 
 public class TransDto implements Serializable {
     private boolean isSuccess;
@@ -98,5 +103,20 @@ public class TransDto implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "TransDto{" +
+                "isSuccess=" + isSuccess +
+                ", source='" + source + '\'' +
+                ", target='" + target + '\'' +
+                ", msg='" + msg + '\'' +
+                ", user=" + user +
+                ", users=" + Arrays.toString(users) +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", ids=" + Arrays.toString(ids) +
+                '}';
     }
 }

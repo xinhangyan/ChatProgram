@@ -1,11 +1,16 @@
 package commands;
 
+import database.UserDatabase;
 import interfaces.Command;
 import models.TransDto;
 import models.User;
 import workers.ClientWorker;
 
 import java.io.IOException;
+
+/**
+ *  Shows user settings.
+ */
 
 public class Settings implements Command {
     @Override
@@ -34,7 +39,7 @@ public class Settings implements Command {
         user.setEmail(modify.getEmail());
         user.setFavorite(modify.getFavorite());
         TransDto transDto = new TransDto(true, "set", dto.getSource(), "success!");
-        transDto.setUser(user);
+        transDto.setUser(UserDatabase.getSingleton().getUser(clientWorker.getUser().getUsername()));
         clientWorker.write(transDto);
 
     }

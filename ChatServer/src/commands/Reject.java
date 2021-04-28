@@ -7,6 +7,10 @@ import workers.ClientWorker;
 
 import java.io.IOException;
 
+/**
+ *  Reject friend request.
+ */
+
 public class Reject implements Command {
     @Override
     public String[] getArgumentsDescription() {

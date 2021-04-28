@@ -9,6 +9,10 @@ import workers.ClientWorker;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ *  Login to account if already have one.
+ */
+
 public class Login implements Command {
     @Override
     public String[] getArgumentsDescription() {
@@ -40,7 +44,6 @@ public class Login implements Command {
         }
 
         User user = userDatabase.authenticateAndGetUser(dto.getUsername(), dto.getPassword());
-
         if (user != null) {
             clientWorker.setUser(user);
             TransDto login = new TransDto(true, "login", dto.getSource(), "you are now logged in!");

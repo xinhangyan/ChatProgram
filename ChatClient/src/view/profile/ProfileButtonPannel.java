@@ -1,15 +1,15 @@
 package view.profile;
 
-import datebase.UserDatabase;
-import listner.*;
+import listener.*;
 import view.AllFrame;
 import works.ChatClient;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
+
+/**
+ *  This class includes all buttons with corresponding features.
+ */
 
 public class ProfileButtonPannel extends JPanel {
 
@@ -18,9 +18,9 @@ public class ProfileButtonPannel extends JPanel {
         setBorder(BorderFactory.createEtchedBorder());
         setLayout(new GridLayout(3,2));
 
-        JButton input = new JButton("input");
+        JButton input = new JButton("import");
         input.setVisible(true);
-        JButton output = new JButton("output");
+        JButton output = new JButton("export");
         output.setVisible(true);
 
         JButton myFriends = new JButton("my friends");
@@ -28,26 +28,27 @@ public class ProfileButtonPannel extends JPanel {
         JButton allUser = new JButton("all user");
         allUser.setVisible(true);
 
-        JButton pend = new JButton("pend"+"("+ ChatClient.user.getPendingFriendRequests().size()+")");
+        JButton pend = new JButton("received"+"("+ ChatClient.user.getPendingFriendRequests().size()+")");
         pend.setVisible(true);
-        JButton waitAccept = new JButton("wait accept"+"("+ ChatClient.user.getSendingFriendRequests().size()+")");
-        waitAccept.setVisible(true);
+        JButton send = new JButton("sent"+"("+ ChatClient.user.getSendingFriendRequests().size()+")");
+        send.setVisible(true);
         add(input);
         add(output);
         add(allUser);
         add(myFriends);
         add(pend);
-        add(waitAccept);
+        add(send);
         setVisible(true);
 
         AllFrame.profileCenterPanelPendButton = pend;
+        AllFrame.profileCenterPanelSendButton = send;
 
 //        allUser.addActionListener();
         new ReceiveAcceptListener(pend);
         pend.addActionListener(new PendButtonListener());
         allUser.addActionListener(new AllUserListener());
         myFriends.addActionListener(new FriendsListListner());
-        waitAccept.addActionListener(new WaitAccepButtontListener());
+        send.addActionListener(new WaitAccepButtontListener());
         input.addActionListener(new InputProfileListener());
         output.addActionListener(new OutputProfileListener());
 

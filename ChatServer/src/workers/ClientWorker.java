@@ -9,6 +9,13 @@ import utils.CustomLogger;
 import java.io.*;
 import java.net.Socket;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
+/**
+ *  This class guarantees each connection inside server class.
+ */
 
 public class ClientWorker extends Thread {
     private final Socket socket;
@@ -82,8 +89,25 @@ public class ClientWorker extends Thread {
     }
 
     public void write(TransDto dto) throws IOException {
-        oos.writeObject(dto);
-        oos.flush();
+        System.out.println(dto.toString());
+        System.out.println("________________________________________");
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+        objectOutputStream.writeObject(dto);
+        objectOutputStream.flush();
+        byte[] bytes = byteArrayOutputStream.toByteArray();
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
+        ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+        try {
+            TransDto o = (TransDto)objectInputStream.readObject();
+            System.out.println(o.toString());
+            oos.writeObject(o);
+            oos.flush();
+        } catch (ClassNotFoundException e) {
+            System.out.println("读取失败");
+        }
+
     }
 
     public User getUser() {

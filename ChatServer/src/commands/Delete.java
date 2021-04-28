@@ -8,6 +8,10 @@ import workers.ClientWorker;
 
 import java.io.IOException;
 
+/**
+ *  Delete current account.
+ */
+
 public class Delete implements Command {
     @Override
     public String[] getArgumentsDescription() {

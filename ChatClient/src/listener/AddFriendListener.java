@@ -1,13 +1,17 @@
-package listner;
+package listener;
 
 import models.TransDto;
 import models.User;
+import view.AllFrame;
 import view.BaseDialog;
 import works.ChatClient;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
+
+/**
+ *  This class defines possible actions after clicking add friend button.
+ */
 
 public class AddFriendListener extends BaseListener{
     JButton jButton;
@@ -44,6 +48,8 @@ public class AddFriendListener extends BaseListener{
             jPanel.remove(jButton);
             jPanel.add(jLabel);
             jPanel.repaint();
+            AllFrame.profileCenterPanelSendButton.setText("sent"+"("+ ChatClient.user.getSendingFriendRequests().size()+")");
+            AllFrame.profileCenterPanelSendButton.repaint();
         } else {
             jButton.setVisible(false);
             new BaseDialog(dto.getMsg());
