@@ -1,10 +1,7 @@
 package models;
 
-import java.io.Serial;
 import java.io.Serializable;
-import java.net.URL;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.TreeSet;
 
 /**
  *  This class includes user information.
@@ -19,11 +16,8 @@ public class User implements Comparable<User>, Serializable {
     private String photoURL; // Should use URL?
     private String email;
     private String favorite;
-    @Serial
     private TreeSet<Integer> friends;
-    @Serial
     private TreeSet<Integer> pendingFriendRequests;
-    @Serial
     private TreeSet<Integer> sendingFriendRequests;
     private Integer isPrivate;//0、public 1、only friends 2、private
     private boolean online;

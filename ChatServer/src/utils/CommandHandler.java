@@ -21,7 +21,11 @@ public class CommandHandler {
     public void onCommand(TransDto dto) throws IOException {
         Command registeredCommand = commands.getCommand(dto.getTarget());
         if (registeredCommand != null) {
-            registeredCommand.execute(dto, clientWorker);
+            try {
+                registeredCommand.execute(dto, clientWorker);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else {
             TransDto transDto = new TransDto(false);
             transDto.setMsg("Command not found. Use help command to list all commands and their usage.");

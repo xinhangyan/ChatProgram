@@ -19,12 +19,11 @@ public class TestClass {
         list.add("set");
         list.add("info");
         list.add("list");
-        list.add("delete");
         list.add("addfriend");
-        list.add("exit");
         list.add("friendlist");
         list.add("userlist");
         list.add("reject");
+        list.add("exit");
         try {
             Socket socket = new Socket("localhost", 6667);
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
@@ -36,11 +35,13 @@ public class TestClass {
                 transDto.setUsername("jack");
                 transDto.setPassword("12345");
                 transDto.setIds(new Integer[]{1,2,3});
-//                transDto.setUser(new User(1,"jack","12345"));
+                transDto.setUser(new User(1,"jack","12345"));
                 oos.writeObject(transDto);
                 oos.flush();
                 TransDto transDto1 = (TransDto) ois.readObject();
-                System.out.println(transDto1);
+                System.out.println("commend:"+target);
+                System.out.println("response:"+transDto1);
+
                 Thread.sleep(500);
             }
 
